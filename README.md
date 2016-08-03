@@ -28,7 +28,6 @@ sysinfo.txt
 *.apk
 *.unitypackage
 
-#User Specific
 *.userprefs
 *.usertasks
 
@@ -55,7 +54,6 @@ bld/
 [Ll]og/
 
 .vs/
-#wwwroot/
 
 [Tt]est[Rr]esult*/
 [Bb]uild[Ll]og.*
