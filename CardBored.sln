@@ -1,0 +1,26 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2015
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CardBored.CSharp", "CardBored.CSharp.csproj", "{32B954AE-0879-C379-FEA1-6BFACB35953C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CardBored.CSharp.Editor", "CardBored.CSharp.Editor.csproj", "{D1E1A1B4-F433-D7C8-F995-C99C91E4632D}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{32B954AE-0879-C379-FEA1-6BFACB35953C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{32B954AE-0879-C379-FEA1-6BFACB35953C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{32B954AE-0879-C379-FEA1-6BFACB35953C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{32B954AE-0879-C379-FEA1-6BFACB35953C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D1E1A1B4-F433-D7C8-F995-C99C91E4632D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D1E1A1B4-F433-D7C8-F995-C99C91E4632D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D1E1A1B4-F433-D7C8-F995-C99C91E4632D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D1E1A1B4-F433-D7C8-F995-C99C91E4632D}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

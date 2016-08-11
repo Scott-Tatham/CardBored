@@ -1,0 +1,9 @@
+__MyAssets = everything the team makes
+_ImportedAssets = everything we import from elsewhere
+
+ENV_ = environment asset(prefab)
+CHR_ = character asset 	(prefab)
+ANM_ = animation 	(asset)
+SND_ = sound/music	(asset)
+MAT_ = texure/material	(asset)
+SHD_ = shader		(asset)
