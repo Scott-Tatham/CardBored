@@ -1,12 +1,20 @@
 Base path: C:/Program Files/Unity/Editor/Data
 Cmd: getPlatforms
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD
-Cmd: compileSnippet
-  api=4 type=0 insize=13030 outsize=5421 kw=UNITY_COLORSPACE_GAMMA _SUNDISK_SIMPLE pd=UNITY_ENABLE_REFLECTION_BUFFERS UNITY_PBS_USE_BRDF1 UNITY_SPECCUBE_BOX_PROJECTION UNITY_SPECCUBE_BLENDING UNITY_TEXTURE_ALPHASPLIT_ALLOWED ok=1
-Cmd: compileSnippet
-  api=4 type=1 insize=13030 outsize=929 kw=UNITY_COLORSPACE_GAMMA _SUNDISK_SIMPLE pd=UNITY_ENABLE_REFLECTION_BUFFERS UNITY_PBS_USE_BRDF1 UNITY_SPECCUBE_BOX_PROJECTION UNITY_SPECCUBE_BLENDING UNITY_TEXTURE_ALPHASPLIT_ALLOWED ok=1
-=======
->>>>>>> 183545befce2dccdfc8c99eecf9d6fc088eabd9f
->>>>>>> master
+Cmd: preprocess
+  insize=542 outsize=1522 ok=1
+Cmd: preprocess
+  insize=1124 outsize=1649 ok=1
+Cmd: preprocess
+  insize=820 outsize=364 ok=1
+Cmd: preprocess
+  insize=607 outsize=280 ok=1
+Cmd: preprocess
+  insize=21604 outsize=3718 ok=1
+Cmd: preprocess
+  insize=769 outsize=410 ok=1
+Cmd: preprocess
+  insize=989 outsize=421 ok=1
+Cmd: preprocess
+  insize=936 outsize=413 ok=1
+Cmd: preprocess
+  insize=1679 outsize=477 ok=1
