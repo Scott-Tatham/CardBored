@@ -1,13 +1,19 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class PlaceBlock : MonoBehaviour
 {
     [SerializeField]
-    private Bounds[] allBounds;
+    private GameObject currentBlock;
+    private List<GameObject> allBounds = new List<GameObject>();
     private Ray ray;
     private RaycastHit hit;
-    private GameObject currentBlock;
+
+    void Start()
+    {
+        allBounds.AddRange(GameObject.FindGameObjectsWithTag("BuildZone"));
+    }
 
     void Update()
     {
@@ -21,13 +27,13 @@ public class PlaceBlock : MonoBehaviour
             ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             Physics.Raycast(ray, out hit);
 
-            hit.point = new Vector3(Mathf.RoundToInt(hit.point.x), Mathf.RoundToInt(hit.point.x), Mathf.RoundToInt(hit.point.x));
+            Vector3 placePos = new Vector3(hit.transform.position.x, hit.transform.position.y + 1, hit.transform.position.z);
 
-            foreach (Bounds b in allBounds)
+            foreach (GameObject go in allBounds)
             {
-                if (b.Contains(hit.point))
+                if (go.GetComponent<BoundingBox>().GetBuildZone().Contains(hit.point))
                 {
-                    GameObject block = Instantiate(currentBlock, hit.point, Quaternion.identity) as GameObject;
+                    GameObject block = Instantiate(currentBlock, placePos, Quaternion.identity) as GameObject;
                 }
             }
         }

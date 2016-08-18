@@ -4,6 +4,7 @@ using System.Collections;
 public class BoundingBox : MonoBehaviour
 {
     private Bounds buildZone;
+    private GameObject buildingPlatform;
 
     public Bounds GetBuildZone() { return buildZone; }
 
