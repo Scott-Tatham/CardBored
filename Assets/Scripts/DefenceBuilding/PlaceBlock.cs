@@ -25,15 +25,16 @@ public class PlaceBlock : MonoBehaviour
         if (currentBlock != null && Input.GetMouseButtonDown(0))
         {
             ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-            Physics.Raycast(ray, out hit);
-
-            Vector3 placePos = new Vector3(hit.transform.position.x, hit.transform.position.y + 1, hit.transform.position.z);
-
-            foreach (GameObject go in allBounds)
+            if (Physics.Raycast(ray, out hit))
             {
-                if (go.GetComponent<BoundingBox>().GetBuildZone().Contains(hit.point))
+                Vector3 placePos = new Vector3(hit.transform.position.x, hit.transform.position.y + 1, hit.transform.position.z);
+
+                foreach (GameObject go in allBounds)
                 {
-                    GameObject block = Instantiate(currentBlock, placePos, Quaternion.identity) as GameObject;
+                    if (go.GetComponent<BoundingBox>().GetBuildZone().Contains(hit.point))
+                    {
+                        GameObject block = Instantiate(currentBlock, placePos, Quaternion.identity) as GameObject;
+                    }
                 }
             }
         }

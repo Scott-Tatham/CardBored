@@ -80,6 +80,7 @@
     <Compile Include="Assets\Scripts\DefenceBuilding\BoundingBox.cs" />
     <Compile Include="Assets\Scripts\DefenceBuilding\PlaceBlock.cs" />
     <Compile Include="Assets\Scripts\Events.cs" />
+    <Compile Include="Assets\Scripts\Networking\NetworkManager.cs" />
     <Compile Include="Assets\Scripts\Optionals\EnvironmentModifiers.cs" />
     <Compile Include="Assets\Scripts\Optionals\Options.cs" />
     <Compile Include="Assets\Scripts\Player\PlayerLook.cs" />
