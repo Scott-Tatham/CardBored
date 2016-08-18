@@ -66,7 +66,6 @@ public class PlayerStats : MonoBehaviour
     void Awake()
     {
         SetDirectionalVelocity(Vector3.zero);
-        
         SetAppSurface(true);
     }
 

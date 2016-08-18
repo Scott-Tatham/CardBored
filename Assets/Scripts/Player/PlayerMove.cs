@@ -7,14 +7,10 @@ public class PlayerMove : MonoBehaviour
     private float xComp;
     private float zComp;
     private Vector3 speedLimit;
-    private PlayerStats us;
     private EnvironmentModifiers em;
-    private Rigidbody rb;
 
     void Start()
     {
-        rb = GetComponent<Rigidbody>();
-        us = GetComponent<PlayerStats>();
         em = GameObject.FindGameObjectWithTag("GameManager").GetComponent<EnvironmentModifiers>();
     }
 
@@ -25,39 +21,39 @@ public class PlayerMove : MonoBehaviour
 
     public void move()
     {
-        rb.AddForce(new Vector3(0, (em.GetGravity() * rb.mass), 0), ForceMode.Acceleration);
+        GetComponent<Rigidbody>().AddForce(new Vector3(0, (em.GetGravity() * GetComponent<Rigidbody>().mass), 0), ForceMode.Acceleration);
 
         xComp = Input.GetAxis("Horizontal");
         zComp = Input.GetAxis("Vertical");
 
-        us.SetDirectionalVelocity(new Vector3(xComp, 0, zComp));
-        us.SetDirectionalVelocity(transform.TransformDirection(us.GetDirectionalVelocity()));
+        GetComponent<PlayerStats>().SetDirectionalVelocity(new Vector3(xComp, 0, zComp));
+        GetComponent<PlayerStats>().SetDirectionalVelocity(transform.TransformDirection(GetComponent<PlayerStats>().GetDirectionalVelocity()));
 
-        rb.AddForce(us.GetDirectionalVelocity() * us.GetMoveSpeed(), ForceMode.Impulse);
+        GetComponent<Rigidbody>().AddForce(GetComponent<PlayerStats>().GetDirectionalVelocity() * GetComponent<PlayerStats>().GetMoveSpeed(), ForceMode.Impulse);
 
-        speedLimit = (us.GetDirectionalVelocity() - rb.velocity);
-        speedLimit.x = Mathf.Clamp(speedLimit.x, -us.GetMoveSpeed(), us.GetMoveSpeed());
-        speedLimit.z = Mathf.Clamp(speedLimit.z, -us.GetMoveSpeed(), us.GetMoveSpeed());
+        speedLimit = (GetComponent<PlayerStats>().GetDirectionalVelocity() - GetComponent<Rigidbody>().velocity);
+        speedLimit.x = Mathf.Clamp(speedLimit.x, -GetComponent<PlayerStats>().GetMoveSpeed(), GetComponent<PlayerStats>().GetMoveSpeed());
+        speedLimit.z = Mathf.Clamp(speedLimit.z, -GetComponent<PlayerStats>().GetMoveSpeed(), GetComponent<PlayerStats>().GetMoveSpeed());
         speedLimit.y = 0;
 
-        rb.AddForce(speedLimit, ForceMode.VelocityChange);
+        GetComponent<Rigidbody>().AddForce(speedLimit, ForceMode.VelocityChange);
 
-        if (Input.GetKeyDown(KeyCode.Space) && us.GetAppSurface())
+        if (Input.GetKeyDown(KeyCode.Space) && GetComponent<PlayerStats>().GetAppSurface())
         {
-            rb.AddForce((Vector3.up) * us.GetJumpSpeed(), ForceMode.Impulse);
+            GetComponent<Rigidbody>().AddForce((Vector3.up) * GetComponent<PlayerStats>().GetJumpSpeed(), ForceMode.Impulse);
         }
     }
 
-    void OnCollisionEnter(Collision col)
+    void OnCollisionEnter(Collision _col)
     {
-        if (col.collider.tag == "Environment")
+        if (_col.transform.tag == "Environment")
         {
-            us.SetAppSurface(true);
+            GetComponent<PlayerStats>().SetAppSurface(true);
         }
     }
 
     void OnCollisionExit()
     {
-        us.SetAppSurface(false);
+        GetComponent<PlayerStats>().SetAppSurface(false);
     }
 }
