@@ -144,6 +144,7 @@
     <None Include="Assets\ProBuilder\Shader\pb_UnlitVertexColor.shader" />
     <None Include="Assets\ProBuilder\Shader\pb_VertexShader.shader" />
     <None Include="Assets\ProBuilder\readme.txt" />
+    <None Include="Assets\Shaders\DoubleSide.shader" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\SyntaxTree\UnityVS\2015\UnityVS.CSharp.targets" />
 </Project>
