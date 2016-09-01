@@ -40,28 +40,49 @@ public class PlaceBlock : MonoBehaviour
                     {
                         placePos = hit.transform.position + hit.normal;
                     }
-                    
+
                     foreach (GameObject go in allBounds)
                     {
                         // Get placement area transform's bounds and determine the Build Zone's location. Encapsulation?
                         if (go.GetComponent<BoxCollider>().bounds.Contains(placePos))
                         {
-                            //if (go.GetComponent<BoundingBox>().CheckBlock(placePos))
+                            int x, y, z;
+                            GameObject block = Instantiate(currentBlock, placePos, Quaternion.identity) as GameObject;
+
+                            if ((placePos.x - 0.5f) % 2 == 1)
                             {
-                                GameObject block = Instantiate(currentBlock, placePos, Quaternion.identity) as GameObject;
-                                
-                                block.GetComponent<BaseBlock>().SetBZSpace(Mathf.RoundToInt(placePos.x - go.GetComponent<BoundingBox>().GetZeroPoint().x), Mathf.RoundToInt(placePos.y - go.GetComponent<BoundingBox>().GetZeroPoint().y), Mathf.RoundToInt(placePos.z - go.GetComponent<BoundingBox>().GetZeroPoint().z));
-                                //Debug.Log(block.GetComponent<BaseBlock>().GetBZSpace().GetBZSpace());
-                                go.GetComponent<BoundingBox>().AddBlock(block.GetComponent<BaseBlock>());
-                                block.GetComponent<BaseBlock>().SetSide(hit.normal);
-
-                                //Debug.Log(block.GetComponent<BaseBlock>().GetBZSpace().GetBZSpace());
-
-                                if (block.tag != "StaticBlock" && hit.transform.tag != "Base")
-                                {
-                                    block.GetComponent<BaseBlock>().SetBlockParent(hit.transform);
-                                }
+                                x = Mathf.RoundToInt(placePos.x - go.transform.position.x) - 1;
                             }
+
+                            else
+                            {
+                                x = Mathf.RoundToInt(placePos.x - go.transform.position.x);
+                            }
+
+                            if ((placePos.y - 0.5f) % 2 == 1)
+                            {
+                                y = Mathf.RoundToInt(placePos.y - go.transform.position.y) - 1;
+                            }
+
+                            else
+                            {
+                                y = Mathf.RoundToInt(placePos.y - go.transform.position.y);
+                            }
+
+                            if ((placePos.z - 0.5f) % 2 == 1)
+                            {
+                                z = Mathf.RoundToInt(placePos.z - go.transform.position.z) - 1;
+                            }
+
+                            else
+                            {
+                                z = Mathf.RoundToInt(placePos.z - go.transform.position.z);
+                            }
+
+                            block.GetComponent<BaseBlock>().SetBZSpace(x, y, z);
+                            block.GetComponent<BaseBlock>().SetBounds(go.GetComponent<BoundingBox>());
+                            Debug.Log(block.GetComponent<BaseBlock>().GetBZSpace().GetBZSpace());
+                            go.GetComponent<BoundingBox>().AddBlock(block.GetComponent<BaseBlock>());
                         }
                     }
                 }

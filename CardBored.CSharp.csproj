@@ -81,6 +81,7 @@
     <Compile Include="Assets\Scripts\DefenceBuilding\BlockFunctionality\BaseBlock.cs" />
     <Compile Include="Assets\Scripts\DefenceBuilding\BlockFunctionality\Rotate.cs" />
     <Compile Include="Assets\Scripts\DefenceBuilding\BlockFunctionality\Slide.cs" />
+    <Compile Include="Assets\Scripts\DefenceBuilding\BlockFunctionality\Static.cs" />
     <Compile Include="Assets\Scripts\DefenceBuilding\BlockFunctionality\Variable.cs" />
     <Compile Include="Assets\Scripts\DefenceBuilding\BoundingBox.cs" />
     <Compile Include="Assets\Scripts\DefenceBuilding\EventTimer.cs" />

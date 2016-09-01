@@ -10,7 +10,7 @@ public class EventTimer : MonoBehaviour
     // Need some way of not moving blocks placed halfway through cycle.
     void Start()
     {
-        InvokeRepeating("ChangeState", 0.0f, 1.0f);
+        InvokeRepeating("ChangeState", 0.0f, 1.5f);
     }
 
     void ChangeState()

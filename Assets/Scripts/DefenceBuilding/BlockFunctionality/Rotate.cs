@@ -4,8 +4,10 @@ using System.Collections;
 public class Rotate : BaseBlock
 {
     // Todo - Direction and side options.
-    void Update()
+    protected override void Update()
     {
+        base.Update();
+
         RotateF();
     }
 
