@@ -59,7 +59,7 @@ public class BoundingBox : MonoBehaviour
 
     public void MoveBlock(BaseBlock _bb, Vector3 _dir)
     {
-        blocks[Mathf.RoundToInt(_bb.GetBZSpace().GetBZSpace().x), Mathf.RoundToInt(_bb.GetBZSpace().GetBZSpace().y), Mathf.RoundToInt(_bb.GetBZSpace().GetBZSpace().z)] = null;
-        blocks[Mathf.RoundToInt(_bb.GetBZSpace().GetBZSpace().x + _dir.x), Mathf.RoundToInt(_bb.GetBZSpace().GetBZSpace().y + _dir.y), Mathf.RoundToInt(_bb.GetBZSpace().GetBZSpace().z + _dir.z)] = _bb;
+        blocks[Mathf.RoundToInt(_bb.GetBZSpace().GetBZSpace().x), Mathf.RoundToInt(_bb.GetBZSpace().GetBZSpace().y), Mathf.RoundToInt(_bb.GetBZSpace().GetBZSpace().z)] = _bb;
+        blocks[Mathf.RoundToInt(_bb.GetBZSpace().GetBZSpace().x - _dir.x), Mathf.RoundToInt(_bb.GetBZSpace().GetBZSpace().y - _dir.y), Mathf.RoundToInt(_bb.GetBZSpace().GetBZSpace().z - _dir.z)] = null;
     }
 }

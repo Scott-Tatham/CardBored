@@ -4,12 +4,17 @@ using System.Collections;
 public class PlayerLook : MonoBehaviour
 {
     [SerializeField]
+    private Texture2D crossHair;
+    [SerializeField]
     private GameObject fpCamera;
+    private float centreX;
+    private float centreY;
     private float xMouse;
     private float yMouse;
     private float xEul;
     private float yEul;
     private float zEul;
+    private Rect rect;
     private Options opt;
     private Transform player;
     private Quaternion playerQ;
@@ -25,15 +30,25 @@ public class PlayerLook : MonoBehaviour
         fpCameraQ = fpCamera.transform.localRotation;
 
         MouseLock();
+
+        centreX = (Screen.width / 2) - (crossHair.width / 2);
+        centreY = (Screen.height / 2) - (crossHair.height / 2);
+
+        rect = new Rect(centreX, centreY, crossHair.width, crossHair.height);
     }
 
     void Update()
     {
-        lookRotation();
+        LookRotation();
         SetMouseLock();
     }
 
-    public void lookRotation()
+    void OnGUI()
+    {
+        GUI.DrawTexture(rect, crossHair);
+    }
+
+    public void LookRotation()
     {
         xMouse = Input.GetAxis("Mouse X") * opt.GetXSens();
         yMouse = Input.GetAxis("Mouse Y") * opt.GetYSens();

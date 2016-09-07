@@ -6,11 +6,10 @@ public class EventTimer : MonoBehaviour
     private bool canDo;
 
     public bool GetCanDo() { return canDo; }
-
-    // Need some way of not moving blocks placed halfway through cycle.
+    
     void Start()
     {
-        InvokeRepeating("ChangeState", 0.0f, 2.0f);
+        InvokeRepeating("ChangeState", 0.0f, 1.5f);
     }
 
     void ChangeState()
