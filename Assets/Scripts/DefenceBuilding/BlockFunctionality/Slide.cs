@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class Slide : BaseBlock
+public class Slide : PowerNode
 {
     public enum Direction
     {
@@ -14,6 +14,8 @@ public class Slide : BaseBlock
         NULL
     }
 
+    private bool[] init = new bool[6] { true, true, true, true, true, true };
+    private bool[] newRun = new bool[6] { true, true, true, true, true, true };
     private Vector3[] target = new Vector3[6];
     private Direction[] dir = new Direction[6]
     {
@@ -34,409 +36,778 @@ public class Slide : BaseBlock
             SlideF();
         }
     }
-    // One Side Only
+
     void SlideF()
     {
-        if (InRange(GetBZSpace().GetBZSpace() + Vector3.forward))
+        if (isActive[0] && isPowered)
         {
-            if (bb[Mathf.RoundToInt(GetBZSpace().GetBZSpace().x + Vector3.forward.x), Mathf.RoundToInt(GetBZSpace().GetBZSpace().y + Vector3.forward.y), Mathf.RoundToInt(GetBZSpace().GetBZSpace().z + Vector3.forward.z)] != null && bb[Mathf.RoundToInt(GetBZSpace().GetBZSpace().x + Vector3.forward.x), Mathf.RoundToInt(GetBZSpace().GetBZSpace().y + Vector3.forward.y), Mathf.RoundToInt(GetBZSpace().GetBZSpace().z + Vector3.forward.z)].tag != "StaticBlock" && bb[Mathf.RoundToInt(GetBZSpace().GetBZSpace().x + Vector3.forward.x), Mathf.RoundToInt(GetBZSpace().GetBZSpace().y + Vector3.forward.y), Mathf.RoundToInt(GetBZSpace().GetBZSpace().z + Vector3.forward.z)].tag != "SlideBlock")
+            if (InRange(GetBZSpace().GetBZSpace() + Vector3.forward))
             {
-                BaseBlock b = bb[Mathf.RoundToInt(GetBZSpace().GetBZSpace().x + Vector3.forward.x), Mathf.RoundToInt(GetBZSpace().GetBZSpace().y + Vector3.forward.y), Mathf.RoundToInt(GetBZSpace().GetBZSpace().z + Vector3.forward.z)];
-
-                if (b.transform.position.x >= target[0].x && b.transform.position.y >= target[0].y && b.transform.position.z >= target[0].z)
+                if (bb[Mathf.RoundToInt(GetBZSpace().GetBZSpace().x + Vector3.forward.x), Mathf.RoundToInt(GetBZSpace().GetBZSpace().y + Vector3.forward.y), Mathf.RoundToInt(GetBZSpace().GetBZSpace().z + Vector3.forward.z)] != null && bb[Mathf.RoundToInt(GetBZSpace().GetBZSpace().x + Vector3.forward.x), Mathf.RoundToInt(GetBZSpace().GetBZSpace().y + Vector3.forward.y), Mathf.RoundToInt(GetBZSpace().GetBZSpace().z + Vector3.forward.z)].transform.parent == null && bb[Mathf.RoundToInt(GetBZSpace().GetBZSpace().x + Vector3.forward.x), Mathf.RoundToInt(GetBZSpace().GetBZSpace().y + Vector3.forward.y), Mathf.RoundToInt(GetBZSpace().GetBZSpace().z + Vector3.forward.z)].tag != "StaticBlock" && bb[Mathf.RoundToInt(GetBZSpace().GetBZSpace().x + Vector3.forward.x), Mathf.RoundToInt(GetBZSpace().GetBZSpace().y + Vector3.forward.y), Mathf.RoundToInt(GetBZSpace().GetBZSpace().z + Vector3.forward.z)].tag != "SlideBlock" && bb[Mathf.RoundToInt(GetBZSpace().GetBZSpace().x + Vector3.forward.x), Mathf.RoundToInt(GetBZSpace().GetBZSpace().y + Vector3.forward.y), Mathf.RoundToInt(GetBZSpace().GetBZSpace().z + Vector3.forward.z)].tag != "RotateBlock")
                 {
-                    switch (dir[0])
+                    BaseBlock b = bb[Mathf.RoundToInt(GetBZSpace().GetBZSpace().x + Vector3.forward.x), Mathf.RoundToInt(GetBZSpace().GetBZSpace().y + Vector3.forward.y), Mathf.RoundToInt(GetBZSpace().GetBZSpace().z + Vector3.forward.z)];
+
+                    if (b.IsMaster(3) && b.GetCanStart())
                     {
-                        case Direction.RIGHT:
-                            b.SetBZSpace(Mathf.RoundToInt(b.GetBZSpace().GetBZSpace().x + Vector3.right.x), Mathf.RoundToInt(b.GetBZSpace().GetBZSpace().y + Vector3.right.y), Mathf.RoundToInt(b.GetBZSpace().GetBZSpace().z + Vector3.right.z));
-                            bz.MoveBlock(b, Vector3.right);
-                            break;
+                        if (newRun[0])
+                        {
+                            newRun[0] = false;
+                            return;
+                        }
 
-                        case Direction.LEFT:
-                            b.SetBZSpace(Mathf.RoundToInt(b.GetBZSpace().GetBZSpace().x + Vector3.left.x), Mathf.RoundToInt(b.GetBZSpace().GetBZSpace().y + Vector3.left.y), Mathf.RoundToInt(b.GetBZSpace().GetBZSpace().z + Vector3.left.z));
-                            bz.MoveBlock(b, Vector3.left);
-                            break;
+                        if (init[0])
+                        {
+                            switch (dir[0])
+                            {
+                                case Direction.RIGHT:
+                                    target[0] = b.transform.position + Vector3.right;
+                                    break;
 
-                        case Direction.UP:
-                            b.SetBZSpace(Mathf.RoundToInt(b.GetBZSpace().GetBZSpace().x + Vector3.up.x), Mathf.RoundToInt(b.GetBZSpace().GetBZSpace().y + Vector3.up.y), Mathf.RoundToInt(b.GetBZSpace().GetBZSpace().z + Vector3.up.z));
-                            bz.MoveBlock(b, Vector3.up);
-                            break;
+                                case Direction.LEFT:
+                                    target[0] = b.transform.position + Vector3.left;
+                                    break;
 
-                        case Direction.DOWN:
-                            b.SetBZSpace(Mathf.RoundToInt(b.GetBZSpace().GetBZSpace().x + Vector3.down.x), Mathf.RoundToInt(b.GetBZSpace().GetBZSpace().y + Vector3.down.y), Mathf.RoundToInt(b.GetBZSpace().GetBZSpace().z + Vector3.down.z));
-                            bz.MoveBlock(b, Vector3.down);
-                            break;
+                                case Direction.UP:
+                                    target[0] = b.transform.position + Vector3.up;
+                                    break;
+
+                                case Direction.DOWN:
+                                    target[0] = b.transform.position + Vector3.down;
+                                    break;
+                            }
+
+                            init[0] = false;
+                        }
+
+                        if (InRange(target[0]))
+                        {
+                            if (bb[Mathf.RoundToInt(target[0].x - bz.transform.position.x), Mathf.RoundToInt(target[0].y - bz.transform.position.y), Mathf.RoundToInt(target[0].z - bz.transform.position.z)] == null || bb[Mathf.RoundToInt(target[0].x - bz.transform.position.x), Mathf.RoundToInt(target[0].y - bz.transform.position.y), Mathf.RoundToInt(target[0].z - bz.transform.position.z)].transform.IsChildOf(b.transform))
+                            {
+                                b.transform.position = Vector3.MoveTowards(b.transform.position, target[0], 1 * Time.deltaTime);
+                            }
+                        }
+
+                        if (b.transform.position.x == target[0].x && b.transform.position.y == target[0].y && b.transform.position.z == target[0].z)
+                        {
+                            b.SetCanStart(false);
+
+                            switch (dir[0])
+                            {
+                                case Direction.RIGHT:
+                                    b.SetBZSpace(Mathf.RoundToInt(b.GetBZSpace().GetBZSpace().x + Vector3.right.x), Mathf.RoundToInt(b.GetBZSpace().GetBZSpace().y + Vector3.right.y), Mathf.RoundToInt(b.GetBZSpace().GetBZSpace().z + Vector3.right.z));
+
+                                    if (InRange(b.GetBZSpace().GetBZSpace() + Vector3.right))
+                                    {
+                                        Transform[] allChildren = b.GetComponentsInChildren<Transform>();
+
+                                        foreach (Transform cb in allChildren)
+                                        {
+                                            bz.MoveBlock(cb.GetComponent<BaseBlock>(), Vector3.right);
+                                        }
+                                    }
+
+                                    break;
+
+                                case Direction.LEFT:
+                                    b.SetBZSpace(Mathf.RoundToInt(b.GetBZSpace().GetBZSpace().x + Vector3.left.x), Mathf.RoundToInt(b.GetBZSpace().GetBZSpace().y + Vector3.left.y), Mathf.RoundToInt(b.GetBZSpace().GetBZSpace().z + Vector3.left.z));
+
+                                    if (InRange(b.GetBZSpace().GetBZSpace() + Vector3.left))
+                                    {
+                                        Transform[] allChildren = b.GetComponentsInChildren<Transform>();
+
+                                        foreach (Transform cb in allChildren)
+                                        {
+                                            bz.MoveBlock(cb.GetComponent<BaseBlock>(), Vector3.left);
+                                        }
+                                    }
+
+                                    break;
+
+                                case Direction.UP:
+                                    b.SetBZSpace(Mathf.RoundToInt(b.GetBZSpace().GetBZSpace().x + Vector3.up.x), Mathf.RoundToInt(b.GetBZSpace().GetBZSpace().y + Vector3.up.y), Mathf.RoundToInt(b.GetBZSpace().GetBZSpace().z + Vector3.up.z));
+
+                                    if (InRange(b.GetBZSpace().GetBZSpace() + Vector3.up))
+                                    {
+                                        Transform[] allChildren = b.GetComponentsInChildren<Transform>();
+
+                                        foreach (Transform cb in allChildren)
+                                        {
+                                            bz.MoveBlock(cb.GetComponent<BaseBlock>(), Vector3.up);
+                                        }
+                                    }
+
+                                    break;
+
+                                case Direction.DOWN:
+                                    b.SetBZSpace(Mathf.RoundToInt(b.GetBZSpace().GetBZSpace().x + Vector3.down.x), Mathf.RoundToInt(b.GetBZSpace().GetBZSpace().y + Vector3.down.y), Mathf.RoundToInt(b.GetBZSpace().GetBZSpace().z + Vector3.down.z));
+
+                                    if (InRange(b.GetBZSpace().GetBZSpace() + Vector3.down))
+                                    {
+                                        Transform[] allChildren = b.GetComponentsInChildren<Transform>();
+
+                                        foreach (Transform cb in allChildren)
+                                        {
+                                            bz.MoveBlock(cb.GetComponent<BaseBlock>(), Vector3.down);
+                                        }
+                                    }
+
+                                    break;
+                            }
+
+                            b.SetPriority(7);
+                            newRun[0] = true;
+                            init[0] = true;
+                        }
                     }
 
-                    init[0] = true;
-                }
-
-                if (init[0])
-                {
-                    switch (dir[0])
+                    else
                     {
-                        case Direction.RIGHT:
-                            target[0] = b.transform.position + Vector3.right;
-                            break;
-
-                        case Direction.LEFT:
-                            target[0] = b.transform.position + Vector3.left;
-                            break;
-
-                        case Direction.UP:
-                            target[0] = b.transform.position + Vector3.up;
-                            break;
-
-                        case Direction.DOWN:
-                            target[0] = b.transform.position + Vector3.down;
-                            break;
+                        newRun[0] = true;
                     }
-
-                    init[0] = false;
-                }
-
-                Debug.Log(target[0]);
-
-                if (InRange(target[0]))
-                {
-                    b.transform.position = Vector3.MoveTowards(b.transform.position, target[0], 1 * Time.deltaTime);
                 }
             }
         }
 
-        if (InRange(GetBZSpace().GetBZSpace() + Vector3.back))
+        if (isActive[1] && isPowered)
         {
-            if (bb[Mathf.RoundToInt(GetBZSpace().GetBZSpace().x + Vector3.back.x), Mathf.RoundToInt(GetBZSpace().GetBZSpace().y + Vector3.back.y), Mathf.RoundToInt(GetBZSpace().GetBZSpace().z + Vector3.back.z)] != null && bb[Mathf.RoundToInt(GetBZSpace().GetBZSpace().x + Vector3.back.x), Mathf.RoundToInt(GetBZSpace().GetBZSpace().y + Vector3.back.y), Mathf.RoundToInt(GetBZSpace().GetBZSpace().z + Vector3.back.z)].tag != "StaticBlock" && bb[Mathf.RoundToInt(GetBZSpace().GetBZSpace().x + Vector3.back.x), Mathf.RoundToInt(GetBZSpace().GetBZSpace().y + Vector3.back.y), Mathf.RoundToInt(GetBZSpace().GetBZSpace().z + Vector3.back.z)].tag != "SlideBlock")
+            if (InRange(GetBZSpace().GetBZSpace() + Vector3.back))
             {
-                BaseBlock b = bb[Mathf.RoundToInt(GetBZSpace().GetBZSpace().x + Vector3.back.x), Mathf.RoundToInt(GetBZSpace().GetBZSpace().y + Vector3.back.y), Mathf.RoundToInt(GetBZSpace().GetBZSpace().z + Vector3.back.z)];
-
-                if (b.transform.position.x >= target[1].x && b.transform.position.y >= target[1].y && b.transform.position.z >= target[1].z)
+                if (bb[Mathf.RoundToInt(GetBZSpace().GetBZSpace().x + Vector3.back.x), Mathf.RoundToInt(GetBZSpace().GetBZSpace().y + Vector3.back.y), Mathf.RoundToInt(GetBZSpace().GetBZSpace().z + Vector3.back.z)] != null && bb[Mathf.RoundToInt(GetBZSpace().GetBZSpace().x + Vector3.back.x), Mathf.RoundToInt(GetBZSpace().GetBZSpace().y + Vector3.back.y), Mathf.RoundToInt(GetBZSpace().GetBZSpace().z + Vector3.back.z)].transform.parent == null && bb[Mathf.RoundToInt(GetBZSpace().GetBZSpace().x + Vector3.back.x), Mathf.RoundToInt(GetBZSpace().GetBZSpace().y + Vector3.back.y), Mathf.RoundToInt(GetBZSpace().GetBZSpace().z + Vector3.back.z)].tag != "StaticBlock" && bb[Mathf.RoundToInt(GetBZSpace().GetBZSpace().x + Vector3.back.x), Mathf.RoundToInt(GetBZSpace().GetBZSpace().y + Vector3.back.y), Mathf.RoundToInt(GetBZSpace().GetBZSpace().z + Vector3.back.z)].tag != "SlideBlock" && bb[Mathf.RoundToInt(GetBZSpace().GetBZSpace().x + Vector3.back.x), Mathf.RoundToInt(GetBZSpace().GetBZSpace().y + Vector3.back.y), Mathf.RoundToInt(GetBZSpace().GetBZSpace().z + Vector3.back.z)].tag != "RotateBlock")
                 {
-                    switch (dir[1])
+                    BaseBlock b = bb[Mathf.RoundToInt(GetBZSpace().GetBZSpace().x + Vector3.back.x), Mathf.RoundToInt(GetBZSpace().GetBZSpace().y + Vector3.back.y), Mathf.RoundToInt(GetBZSpace().GetBZSpace().z + Vector3.back.z)];
+
+                    if (b.IsMaster(4) && b.GetCanStart())
                     {
-                        case Direction.RIGHT:
-                            b.SetBZSpace(Mathf.RoundToInt(b.GetBZSpace().GetBZSpace().x + Vector3.right.x), Mathf.RoundToInt(b.GetBZSpace().GetBZSpace().y + Vector3.right.y), Mathf.RoundToInt(b.GetBZSpace().GetBZSpace().z + Vector3.right.z));
-                            bz.MoveBlock(b, Vector3.right);
-                            break;
+                        if (newRun[1])
+                        {
+                            newRun[1] = false;
+                            return;
+                        }
 
-                        case Direction.LEFT:
-                            b.SetBZSpace(Mathf.RoundToInt(b.GetBZSpace().GetBZSpace().x + Vector3.left.x), Mathf.RoundToInt(b.GetBZSpace().GetBZSpace().y + Vector3.left.y), Mathf.RoundToInt(b.GetBZSpace().GetBZSpace().z + Vector3.left.z));
-                            bz.MoveBlock(b, Vector3.left);
-                            break;
+                        if (init[1])
+                        {
+                            switch (dir[1])
+                            {
+                                case Direction.RIGHT:
+                                    target[1] = b.transform.position + Vector3.right;
+                                    break;
 
-                        case Direction.UP:
-                            b.SetBZSpace(Mathf.RoundToInt(b.GetBZSpace().GetBZSpace().x + Vector3.up.x), Mathf.RoundToInt(b.GetBZSpace().GetBZSpace().y + Vector3.up.y), Mathf.RoundToInt(b.GetBZSpace().GetBZSpace().z + Vector3.up.z));
-                            bz.MoveBlock(b, Vector3.up);
-                            break;
+                                case Direction.LEFT:
+                                    target[1] = b.transform.position + Vector3.left;
+                                    break;
 
-                        case Direction.DOWN:
-                            b.SetBZSpace(Mathf.RoundToInt(b.GetBZSpace().GetBZSpace().x + Vector3.down.x), Mathf.RoundToInt(b.GetBZSpace().GetBZSpace().y + Vector3.down.y), Mathf.RoundToInt(b.GetBZSpace().GetBZSpace().z + Vector3.down.z));
-                            bz.MoveBlock(b, Vector3.down);
-                            break;
+                                case Direction.UP:
+                                    target[1] = b.transform.position + Vector3.up;
+                                    break;
+
+                                case Direction.DOWN:
+                                    target[1] = b.transform.position + Vector3.down;
+                                    break;
+                            }
+
+                            init[1] = false;
+                        }
+
+                        if (InRange(target[1]))
+                        {
+                            if (bb[Mathf.RoundToInt(target[0].x - bz.transform.position.x), Mathf.RoundToInt(target[0].y - bz.transform.position.y), Mathf.RoundToInt(target[0].z - bz.transform.position.z)] == null || bb[Mathf.RoundToInt(target[0].x - bz.transform.position.x), Mathf.RoundToInt(target[0].y - bz.transform.position.y), Mathf.RoundToInt(target[0].z - bz.transform.position.z)].transform.IsChildOf(b.transform))
+                            {
+                                b.transform.position = Vector3.MoveTowards(b.transform.position, target[1], 1 * Time.deltaTime);
+                            }
+                        }
+
+                        if (b.transform.position.x == target[1].x && b.transform.position.y == target[1].y && b.transform.position.z == target[1].z)
+                        {
+                            b.SetCanStart(false);
+
+                            switch (dir[1])
+                            {
+                                case Direction.RIGHT:
+                                    b.SetBZSpace(Mathf.RoundToInt(b.GetBZSpace().GetBZSpace().x + Vector3.right.x), Mathf.RoundToInt(b.GetBZSpace().GetBZSpace().y + Vector3.right.y), Mathf.RoundToInt(b.GetBZSpace().GetBZSpace().z + Vector3.right.z));
+
+                                    if (InRange(b.GetBZSpace().GetBZSpace() + Vector3.right))
+                                    {
+                                        Transform[] allChildren = b.GetComponentsInChildren<Transform>();
+
+                                        foreach (Transform cb in allChildren)
+                                        {
+                                            bz.MoveBlock(cb.GetComponent<BaseBlock>(), Vector3.right);
+                                        }
+                                    }
+
+                                    break;
+
+                                case Direction.LEFT:
+                                    b.SetBZSpace(Mathf.RoundToInt(b.GetBZSpace().GetBZSpace().x + Vector3.left.x), Mathf.RoundToInt(b.GetBZSpace().GetBZSpace().y + Vector3.left.y), Mathf.RoundToInt(b.GetBZSpace().GetBZSpace().z + Vector3.left.z));
+
+                                    if (InRange(b.GetBZSpace().GetBZSpace() + Vector3.left))
+                                    {
+                                        Transform[] allChildren = b.GetComponentsInChildren<Transform>();
+
+                                        foreach (Transform cb in allChildren)
+                                        {
+                                            bz.MoveBlock(cb.GetComponent<BaseBlock>(), Vector3.left);
+                                        }
+                                    }
+
+                                    break;
+
+                                case Direction.UP:
+                                    b.SetBZSpace(Mathf.RoundToInt(b.GetBZSpace().GetBZSpace().x + Vector3.up.x), Mathf.RoundToInt(b.GetBZSpace().GetBZSpace().y + Vector3.up.y), Mathf.RoundToInt(b.GetBZSpace().GetBZSpace().z + Vector3.up.z));
+
+                                    if (InRange(b.GetBZSpace().GetBZSpace() + Vector3.up))
+                                    {
+                                        Transform[] allChildren = b.GetComponentsInChildren<Transform>();
+
+                                        foreach (Transform cb in allChildren)
+                                        {
+                                            bz.MoveBlock(cb.GetComponent<BaseBlock>(), Vector3.up);
+                                        }
+                                    }
+
+                                    break;
+
+                                case Direction.DOWN:
+                                    b.SetBZSpace(Mathf.RoundToInt(b.GetBZSpace().GetBZSpace().x + Vector3.down.x), Mathf.RoundToInt(b.GetBZSpace().GetBZSpace().y + Vector3.down.y), Mathf.RoundToInt(b.GetBZSpace().GetBZSpace().z + Vector3.down.z));
+
+                                    if (InRange(b.GetBZSpace().GetBZSpace() + Vector3.down))
+                                    {
+                                        Transform[] allChildren = b.GetComponentsInChildren<Transform>();
+
+                                        foreach (Transform cb in allChildren)
+                                        {
+                                            bz.MoveBlock(cb.GetComponent<BaseBlock>(), Vector3.down);
+                                        }
+                                    }
+
+                                    break;
+                            }
+
+                            b.SetPriority(7);
+                            newRun[1] = true;
+                            init[1] = true;
+                        }
                     }
 
-                    init[1] = true;
-                }
-
-                if (init[1])
-                {
-                    switch (dir[1])
+                    else
                     {
-                        case Direction.RIGHT:
-                            target[1] = b.transform.position + Vector3.right;
-                            break;
-
-                        case Direction.LEFT:
-                            target[1] = b.transform.position + Vector3.left;
-                            break;
-
-                        case Direction.UP:
-                            target[1] = b.transform.position + Vector3.up;
-                            break;
-
-                        case Direction.DOWN:
-                            target[1] = b.transform.position + Vector3.down;
-                            break;
+                        newRun[1] = true;
                     }
-
-                    init[1] = false;
-                }
-
-                Debug.Log(target[1]);
-
-                if (InRange(target[1]))
-                {
-                    b.transform.position = Vector3.MoveTowards(b.transform.position, target[1], 1 * Time.deltaTime);
                 }
             }
         }
 
-        if (InRange(GetBZSpace().GetBZSpace() + Vector3.right))
+        if (isActive[2] && isPowered)
         {
-            if (bb[Mathf.RoundToInt(GetBZSpace().GetBZSpace().x + Vector3.right.x), Mathf.RoundToInt(GetBZSpace().GetBZSpace().y + Vector3.right.y), Mathf.RoundToInt(GetBZSpace().GetBZSpace().z + Vector3.right.z)] != null && bb[Mathf.RoundToInt(GetBZSpace().GetBZSpace().x + Vector3.right.x), Mathf.RoundToInt(GetBZSpace().GetBZSpace().y + Vector3.right.y), Mathf.RoundToInt(GetBZSpace().GetBZSpace().z + Vector3.right.z)].tag != "StaticBlock" && bb[Mathf.RoundToInt(GetBZSpace().GetBZSpace().x + Vector3.right.x), Mathf.RoundToInt(GetBZSpace().GetBZSpace().y + Vector3.right.y), Mathf.RoundToInt(GetBZSpace().GetBZSpace().z + Vector3.right.z)].tag != "SlideBlock")
+            if (InRange(GetBZSpace().GetBZSpace() + Vector3.right))
             {
-                BaseBlock b = bb[Mathf.RoundToInt(GetBZSpace().GetBZSpace().x + Vector3.right.x), Mathf.RoundToInt(GetBZSpace().GetBZSpace().y + Vector3.right.y), Mathf.RoundToInt(GetBZSpace().GetBZSpace().z + Vector3.right.z)];
-
-                if (b.transform.position.x >= target[2].x && b.transform.position.y >= target[2].y && b.transform.position.z >= target[2].z)
+                if (bb[Mathf.RoundToInt(GetBZSpace().GetBZSpace().x + Vector3.right.x), Mathf.RoundToInt(GetBZSpace().GetBZSpace().y + Vector3.right.y), Mathf.RoundToInt(GetBZSpace().GetBZSpace().z + Vector3.right.z)] != null && bb[Mathf.RoundToInt(GetBZSpace().GetBZSpace().x + Vector3.right.x), Mathf.RoundToInt(GetBZSpace().GetBZSpace().y + Vector3.right.y), Mathf.RoundToInt(GetBZSpace().GetBZSpace().z + Vector3.right.z)].transform.parent == null && bb[Mathf.RoundToInt(GetBZSpace().GetBZSpace().x + Vector3.right.x), Mathf.RoundToInt(GetBZSpace().GetBZSpace().y + Vector3.right.y), Mathf.RoundToInt(GetBZSpace().GetBZSpace().z + Vector3.right.z)].tag != "StaticBlock" && bb[Mathf.RoundToInt(GetBZSpace().GetBZSpace().x + Vector3.right.x), Mathf.RoundToInt(GetBZSpace().GetBZSpace().y + Vector3.right.y), Mathf.RoundToInt(GetBZSpace().GetBZSpace().z + Vector3.right.z)].tag != "SlideBlock" && bb[Mathf.RoundToInt(GetBZSpace().GetBZSpace().x + Vector3.right.x), Mathf.RoundToInt(GetBZSpace().GetBZSpace().y + Vector3.right.y), Mathf.RoundToInt(GetBZSpace().GetBZSpace().z + Vector3.right.z)].tag != "RotateBlock")
                 {
-                    switch (dir[2])
+                    BaseBlock b = bb[Mathf.RoundToInt(GetBZSpace().GetBZSpace().x + Vector3.right.x), Mathf.RoundToInt(GetBZSpace().GetBZSpace().y + Vector3.right.y), Mathf.RoundToInt(GetBZSpace().GetBZSpace().z + Vector3.right.z)];
+
+                    if (b.IsMaster(5) && b.GetCanStart())
                     {
-                        case Direction.FORWARD:
-                            b.SetBZSpace(Mathf.RoundToInt(b.GetBZSpace().GetBZSpace().x + Vector3.forward.x), Mathf.RoundToInt(b.GetBZSpace().GetBZSpace().y + Vector3.forward.y), Mathf.RoundToInt(b.GetBZSpace().GetBZSpace().z + Vector3.forward.z));
-                            bz.MoveBlock(b, Vector3.forward);
-                            break;
+                        if (newRun[2])
+                        {
+                            newRun[2] = false;
+                            return;
+                        }
 
-                        case Direction.BACK:
-                            b.SetBZSpace(Mathf.RoundToInt(b.GetBZSpace().GetBZSpace().x + Vector3.back.x), Mathf.RoundToInt(b.GetBZSpace().GetBZSpace().y + Vector3.back.y), Mathf.RoundToInt(b.GetBZSpace().GetBZSpace().z + Vector3.back.z));
-                            bz.MoveBlock(b, Vector3.back);
-                            break;
+                        if (init[2])
+                        {
+                            switch (dir[2])
+                            {
+                                case Direction.FORWARD:
+                                    target[2] = b.transform.position + Vector3.forward;
+                                    break;
 
-                        case Direction.UP:
-                            b.SetBZSpace(Mathf.RoundToInt(b.GetBZSpace().GetBZSpace().x + Vector3.up.x), Mathf.RoundToInt(b.GetBZSpace().GetBZSpace().y + Vector3.up.y), Mathf.RoundToInt(b.GetBZSpace().GetBZSpace().z + Vector3.up.z));
-                            bz.MoveBlock(b, Vector3.up);
-                            break;
+                                case Direction.BACK:
+                                    target[2] = b.transform.position + Vector3.back;
+                                    break;
 
-                        case Direction.DOWN:
-                            b.SetBZSpace(Mathf.RoundToInt(b.GetBZSpace().GetBZSpace().x + Vector3.down.x), Mathf.RoundToInt(b.GetBZSpace().GetBZSpace().y + Vector3.down.y), Mathf.RoundToInt(b.GetBZSpace().GetBZSpace().z + Vector3.down.z));
-                            bz.MoveBlock(b, Vector3.down);
-                            break;
+                                case Direction.UP:
+                                    target[2] = b.transform.position + Vector3.up;
+                                    break;
+
+                                case Direction.DOWN:
+                                    target[2] = b.transform.position + Vector3.down;
+                                    break;
+                            }
+
+                            init[2] = false;
+                        }
+
+                        if (InRange(target[2]))
+                        {
+                            if (bb[Mathf.RoundToInt(target[0].x - bz.transform.position.x), Mathf.RoundToInt(target[0].y - bz.transform.position.y), Mathf.RoundToInt(target[0].z - bz.transform.position.z)] == null || bb[Mathf.RoundToInt(target[0].x - bz.transform.position.x), Mathf.RoundToInt(target[0].y - bz.transform.position.y), Mathf.RoundToInt(target[0].z - bz.transform.position.z)].transform.IsChildOf(b.transform))
+                            {
+                                b.transform.position = Vector3.MoveTowards(b.transform.position, target[2], 1 * Time.deltaTime);
+                            }
+                        }
+
+                        if (b.transform.position.x == target[2].x && b.transform.position.y == target[2].y && b.transform.position.z == target[2].z)
+                        {
+                            b.SetCanStart(false);
+
+                            switch (dir[2])
+                            {
+                                case Direction.FORWARD:
+                                    b.SetBZSpace(Mathf.RoundToInt(b.GetBZSpace().GetBZSpace().x + Vector3.forward.x), Mathf.RoundToInt(b.GetBZSpace().GetBZSpace().y + Vector3.forward.y), Mathf.RoundToInt(b.GetBZSpace().GetBZSpace().z + Vector3.forward.z));
+
+                                    if (InRange(b.GetBZSpace().GetBZSpace() + Vector3.forward))
+                                    {
+                                        Transform[] allChildren = b.GetComponentsInChildren<Transform>();
+
+                                        foreach (Transform cb in allChildren)
+                                        {
+                                            bz.MoveBlock(cb.GetComponent<BaseBlock>(), Vector3.forward);
+                                        }
+                                    }
+
+                                    break;
+
+                                case Direction.BACK:
+                                    b.SetBZSpace(Mathf.RoundToInt(b.GetBZSpace().GetBZSpace().x + Vector3.back.x), Mathf.RoundToInt(b.GetBZSpace().GetBZSpace().y + Vector3.back.y), Mathf.RoundToInt(b.GetBZSpace().GetBZSpace().z + Vector3.back.z));
+
+                                    if (InRange(b.GetBZSpace().GetBZSpace() + Vector3.back))
+                                    {
+                                        Transform[] allChildren = b.GetComponentsInChildren<Transform>();
+
+                                        foreach (Transform cb in allChildren)
+                                        {
+                                            bz.MoveBlock(cb.GetComponent<BaseBlock>(), Vector3.back);
+                                        }
+                                    }
+                                    break;
+
+                                case Direction.UP:
+                                    b.SetBZSpace(Mathf.RoundToInt(b.GetBZSpace().GetBZSpace().x + Vector3.up.x), Mathf.RoundToInt(b.GetBZSpace().GetBZSpace().y + Vector3.up.y), Mathf.RoundToInt(b.GetBZSpace().GetBZSpace().z + Vector3.up.z));
+
+                                    if (InRange(b.GetBZSpace().GetBZSpace() + Vector3.up))
+                                    {
+                                        Transform[] allChildren = b.GetComponentsInChildren<Transform>();
+
+                                        foreach (Transform cb in allChildren)
+                                        {
+                                            bz.MoveBlock(cb.GetComponent<BaseBlock>(), Vector3.up);
+                                        }
+                                    }
+
+                                    break;
+
+                                case Direction.DOWN:
+                                    b.SetBZSpace(Mathf.RoundToInt(b.GetBZSpace().GetBZSpace().x + Vector3.down.x), Mathf.RoundToInt(b.GetBZSpace().GetBZSpace().y + Vector3.down.y), Mathf.RoundToInt(b.GetBZSpace().GetBZSpace().z + Vector3.down.z));
+
+                                    if (InRange(b.GetBZSpace().GetBZSpace() + Vector3.down))
+                                    {
+                                        Transform[] allChildren = b.GetComponentsInChildren<Transform>();
+
+                                        foreach (Transform cb in allChildren)
+                                        {
+                                            bz.MoveBlock(cb.GetComponent<BaseBlock>(), Vector3.down);
+                                        }
+                                    }
+
+                                    break;
+                            }
+
+                            b.SetPriority(7);
+                            newRun[2] = true;
+                            init[2] = true;
+                        }
                     }
 
-                    init[2] = true;
-                }
-
-                if (init[2])
-                {
-                    switch (dir[2])
+                    else
                     {
-                        case Direction.FORWARD:
-                            target[2] = b.transform.position + Vector3.forward;
-                            break;
-
-                        case Direction.BACK:
-                            target[2] = b.transform.position + Vector3.back;
-                            break;
-
-                        case Direction.UP:
-                            target[2] = b.transform.position + Vector3.up;
-                            break;
-
-                        case Direction.DOWN:
-                            target[2] = b.transform.position + Vector3.down;
-                            break;
+                        newRun[2] = true;
                     }
-
-                    init[2] = false;
-                }
-
-                Debug.Log(target[2]);
-
-                if (InRange(target[2]))
-                {
-                    b.transform.position = Vector3.MoveTowards(b.transform.position, target[2], 1 * Time.deltaTime);
                 }
             }
         }
 
-        if (InRange(GetBZSpace().GetBZSpace() + Vector3.left))
+        if (isActive[3] && isPowered)
         {
-            if (bb[Mathf.RoundToInt(GetBZSpace().GetBZSpace().x + Vector3.left.x), Mathf.RoundToInt(GetBZSpace().GetBZSpace().y + Vector3.left.y), Mathf.RoundToInt(GetBZSpace().GetBZSpace().z + Vector3.left.z)] != null && bb[Mathf.RoundToInt(GetBZSpace().GetBZSpace().x + Vector3.left.x), Mathf.RoundToInt(GetBZSpace().GetBZSpace().y + Vector3.left.y), Mathf.RoundToInt(GetBZSpace().GetBZSpace().z + Vector3.left.z)].tag != "StaticBlock" && bb[Mathf.RoundToInt(GetBZSpace().GetBZSpace().x + Vector3.left.x), Mathf.RoundToInt(GetBZSpace().GetBZSpace().y + Vector3.left.y), Mathf.RoundToInt(GetBZSpace().GetBZSpace().z + Vector3.left.z)].tag != "SlideBlock")
+            if (InRange(GetBZSpace().GetBZSpace() + Vector3.left))
             {
-                BaseBlock b = bb[Mathf.RoundToInt(GetBZSpace().GetBZSpace().x + Vector3.left.x), Mathf.RoundToInt(GetBZSpace().GetBZSpace().y + Vector3.left.y), Mathf.RoundToInt(GetBZSpace().GetBZSpace().z + Vector3.left.z)];
-
-                if (b.transform.position.x >= target[3].x && b.transform.position.y >= target[3].y && b.transform.position.z >= target[3].z)
+                if (bb[Mathf.RoundToInt(GetBZSpace().GetBZSpace().x + Vector3.left.x), Mathf.RoundToInt(GetBZSpace().GetBZSpace().y + Vector3.left.y), Mathf.RoundToInt(GetBZSpace().GetBZSpace().z + Vector3.left.z)] != null && bb[Mathf.RoundToInt(GetBZSpace().GetBZSpace().x + Vector3.left.x), Mathf.RoundToInt(GetBZSpace().GetBZSpace().y + Vector3.left.y), Mathf.RoundToInt(GetBZSpace().GetBZSpace().z + Vector3.left.z)].transform.parent == null && bb[Mathf.RoundToInt(GetBZSpace().GetBZSpace().x + Vector3.left.x), Mathf.RoundToInt(GetBZSpace().GetBZSpace().y + Vector3.left.y), Mathf.RoundToInt(GetBZSpace().GetBZSpace().z + Vector3.left.z)].tag != "StaticBlock" && bb[Mathf.RoundToInt(GetBZSpace().GetBZSpace().x + Vector3.left.x), Mathf.RoundToInt(GetBZSpace().GetBZSpace().y + Vector3.left.y), Mathf.RoundToInt(GetBZSpace().GetBZSpace().z + Vector3.left.z)].tag != "SlideBlock" && bb[Mathf.RoundToInt(GetBZSpace().GetBZSpace().x + Vector3.left.x), Mathf.RoundToInt(GetBZSpace().GetBZSpace().y + Vector3.left.y), Mathf.RoundToInt(GetBZSpace().GetBZSpace().z + Vector3.left.z)].tag != "RotateBlock")
                 {
-                    switch (dir[3])
+                    BaseBlock b = bb[Mathf.RoundToInt(GetBZSpace().GetBZSpace().x + Vector3.left.x), Mathf.RoundToInt(GetBZSpace().GetBZSpace().y + Vector3.left.y), Mathf.RoundToInt(GetBZSpace().GetBZSpace().z + Vector3.left.z)];
+
+                    if (b.IsMaster(6) && b.GetCanStart())
                     {
-                        case Direction.FORWARD:
-                            b.SetBZSpace(Mathf.RoundToInt(b.GetBZSpace().GetBZSpace().x + Vector3.forward.x), Mathf.RoundToInt(b.GetBZSpace().GetBZSpace().y + Vector3.forward.y), Mathf.RoundToInt(b.GetBZSpace().GetBZSpace().z + Vector3.forward.z));
-                            bz.MoveBlock(b, Vector3.forward);
-                            break;
+                        if (newRun[3])
+                        {
+                            newRun[3] = false;
+                            return;
+                        }
 
-                        case Direction.BACK:
-                            b.SetBZSpace(Mathf.RoundToInt(b.GetBZSpace().GetBZSpace().x + Vector3.back.x), Mathf.RoundToInt(b.GetBZSpace().GetBZSpace().y + Vector3.back.y), Mathf.RoundToInt(b.GetBZSpace().GetBZSpace().z + Vector3.back.z));
-                            bz.MoveBlock(b, Vector3.back);
-                            break;
+                        if (init[3])
+                        {
+                            switch (dir[3])
+                            {
+                                case Direction.FORWARD:
+                                    target[3] = b.transform.position + Vector3.forward;
+                                    break;
 
-                        case Direction.UP:
-                            b.SetBZSpace(Mathf.RoundToInt(b.GetBZSpace().GetBZSpace().x + Vector3.up.x), Mathf.RoundToInt(b.GetBZSpace().GetBZSpace().y + Vector3.up.y), Mathf.RoundToInt(b.GetBZSpace().GetBZSpace().z + Vector3.up.z));
-                            bz.MoveBlock(b, Vector3.up);
-                            break;
+                                case Direction.BACK:
+                                    target[3] = b.transform.position + Vector3.back;
+                                    break;
 
-                        case Direction.DOWN:
-                            b.SetBZSpace(Mathf.RoundToInt(b.GetBZSpace().GetBZSpace().x + Vector3.down.x), Mathf.RoundToInt(b.GetBZSpace().GetBZSpace().y + Vector3.down.y), Mathf.RoundToInt(b.GetBZSpace().GetBZSpace().z + Vector3.down.z));
-                            bz.MoveBlock(b, Vector3.down);
-                            break;
+                                case Direction.UP:
+                                    target[3] = b.transform.position + Vector3.up;
+                                    break;
+
+                                case Direction.DOWN:
+                                    target[3] = b.transform.position + Vector3.down;
+                                    break;
+                            }
+
+                            init[3] = false;
+                        }
+
+                        if (InRange(target[3]))
+                        {
+                            if (bb[Mathf.RoundToInt(target[0].x - bz.transform.position.x), Mathf.RoundToInt(target[0].y - bz.transform.position.y), Mathf.RoundToInt(target[0].z - bz.transform.position.z)] == null || bb[Mathf.RoundToInt(target[0].x - bz.transform.position.x), Mathf.RoundToInt(target[0].y - bz.transform.position.y), Mathf.RoundToInt(target[0].z - bz.transform.position.z)].transform.IsChildOf(b.transform))
+                            {
+                                b.transform.position = Vector3.MoveTowards(b.transform.position, target[3], 1 * Time.deltaTime);
+                            }
+                        }
+
+                        if (b.transform.position.x == target[3].x && b.transform.position.y == target[3].y && b.transform.position.z == target[3].z)
+                        {
+                            b.SetCanStart(false);
+
+                            switch (dir[3])
+                            {
+                                case Direction.FORWARD:
+                                    b.SetBZSpace(Mathf.RoundToInt(b.GetBZSpace().GetBZSpace().x + Vector3.forward.x), Mathf.RoundToInt(b.GetBZSpace().GetBZSpace().y + Vector3.forward.y), Mathf.RoundToInt(b.GetBZSpace().GetBZSpace().z + Vector3.forward.z));
+
+                                    if (InRange(b.GetBZSpace().GetBZSpace() + Vector3.forward))
+                                    {
+                                        Transform[] allChildren = b.GetComponentsInChildren<Transform>();
+
+                                        foreach (Transform cb in allChildren)
+                                        {
+                                            bz.MoveBlock(cb.GetComponent<BaseBlock>(), Vector3.forward);
+                                        }
+                                    }
+
+                                    break;
+
+                                case Direction.BACK:
+                                    b.SetBZSpace(Mathf.RoundToInt(b.GetBZSpace().GetBZSpace().x + Vector3.back.x), Mathf.RoundToInt(b.GetBZSpace().GetBZSpace().y + Vector3.back.y), Mathf.RoundToInt(b.GetBZSpace().GetBZSpace().z + Vector3.back.z));
+
+                                    if (InRange(b.GetBZSpace().GetBZSpace() + Vector3.back))
+                                    {
+                                        Transform[] allChildren = b.GetComponentsInChildren<Transform>();
+
+                                        foreach (Transform cb in allChildren)
+                                        {
+                                            bz.MoveBlock(cb.GetComponent<BaseBlock>(), Vector3.back);
+                                        }
+                                    }
+
+                                    break;
+
+                                case Direction.UP:
+                                    b.SetBZSpace(Mathf.RoundToInt(b.GetBZSpace().GetBZSpace().x + Vector3.up.x), Mathf.RoundToInt(b.GetBZSpace().GetBZSpace().y + Vector3.up.y), Mathf.RoundToInt(b.GetBZSpace().GetBZSpace().z + Vector3.up.z));
+
+                                    if (InRange(b.GetBZSpace().GetBZSpace() + Vector3.up))
+                                    {
+                                        Transform[] allChildren = b.GetComponentsInChildren<Transform>();
+
+                                        foreach (Transform cb in allChildren)
+                                        {
+                                            bz.MoveBlock(cb.GetComponent<BaseBlock>(), Vector3.up);
+                                        }
+                                    }
+
+                                    break;
+
+                                case Direction.DOWN:
+                                    b.SetBZSpace(Mathf.RoundToInt(b.GetBZSpace().GetBZSpace().x + Vector3.down.x), Mathf.RoundToInt(b.GetBZSpace().GetBZSpace().y + Vector3.down.y), Mathf.RoundToInt(b.GetBZSpace().GetBZSpace().z + Vector3.down.z));
+
+                                    if (InRange(b.GetBZSpace().GetBZSpace() + Vector3.down))
+                                    {
+                                        Transform[] allChildren = b.GetComponentsInChildren<Transform>();
+
+                                        foreach (Transform cb in allChildren)
+                                        {
+                                            bz.MoveBlock(cb.GetComponent<BaseBlock>(), Vector3.down);
+                                        }
+                                    }
+
+                                    break;
+                            }
+
+                            b.SetPriority(7);
+                            newRun[3] = true;
+                            init[3] = true;
+                        }
                     }
 
-                    init[3] = true;
-                }
-
-                if (init[3])
-                {
-                    switch (dir[3])
+                    else
                     {
-                        case Direction.FORWARD:
-                            target[3] = b.transform.position + Vector3.forward;
-                            break;
-
-                        case Direction.BACK:
-                            target[3] = b.transform.position + Vector3.back;
-                            break;
-
-                        case Direction.UP:
-                            target[3] = b.transform.position + Vector3.up;
-                            break;
-
-                        case Direction.DOWN:
-                            target[3] = b.transform.position + Vector3.down;
-                            break;
+                        newRun[3] = true;
                     }
-
-                    init[3] = false;
-                }
-
-                Debug.Log(target[3]);
-
-                if (InRange(target[3]))
-                {
-                    b.transform.position = Vector3.MoveTowards(b.transform.position, target[3], 1 * Time.deltaTime);
                 }
             }
         }
 
-        if (InRange(GetBZSpace().GetBZSpace() + Vector3.up))
+        if (isActive[4] && isPowered)
         {
-            if (bb[Mathf.RoundToInt(GetBZSpace().GetBZSpace().x + Vector3.up.x), Mathf.RoundToInt(GetBZSpace().GetBZSpace().y + Vector3.up.y), Mathf.RoundToInt(GetBZSpace().GetBZSpace().z + Vector3.up.z)] != null && bb[Mathf.RoundToInt(GetBZSpace().GetBZSpace().x + Vector3.up.x), Mathf.RoundToInt(GetBZSpace().GetBZSpace().y + Vector3.up.y), Mathf.RoundToInt(GetBZSpace().GetBZSpace().z + Vector3.up.z)].tag != "StaticBlock" && bb[Mathf.RoundToInt(GetBZSpace().GetBZSpace().x + Vector3.up.x), Mathf.RoundToInt(GetBZSpace().GetBZSpace().y + Vector3.up.y), Mathf.RoundToInt(GetBZSpace().GetBZSpace().z + Vector3.up.z)].tag != "SlideBlock")
+            if (InRange(GetBZSpace().GetBZSpace() + Vector3.up))
             {
-                BaseBlock b = bb[Mathf.RoundToInt(GetBZSpace().GetBZSpace().x + Vector3.up.x), Mathf.RoundToInt(GetBZSpace().GetBZSpace().y + Vector3.up.y), Mathf.RoundToInt(GetBZSpace().GetBZSpace().z + Vector3.up.z)];
-
-                if (b.transform.position.x >= target[4].x && b.transform.position.y >= target[4].y && b.transform.position.z >= target[4].z)
+                if (bb[Mathf.RoundToInt(GetBZSpace().GetBZSpace().x + Vector3.up.x), Mathf.RoundToInt(GetBZSpace().GetBZSpace().y + Vector3.up.y), Mathf.RoundToInt(GetBZSpace().GetBZSpace().z + Vector3.up.z)] != null && bb[Mathf.RoundToInt(GetBZSpace().GetBZSpace().x + Vector3.up.x), Mathf.RoundToInt(GetBZSpace().GetBZSpace().y + Vector3.up.y), Mathf.RoundToInt(GetBZSpace().GetBZSpace().z + Vector3.up.z)].transform.parent == null && bb[Mathf.RoundToInt(GetBZSpace().GetBZSpace().x + Vector3.up.x), Mathf.RoundToInt(GetBZSpace().GetBZSpace().y + Vector3.up.y), Mathf.RoundToInt(GetBZSpace().GetBZSpace().z + Vector3.up.z)].tag != "StaticBlock" && bb[Mathf.RoundToInt(GetBZSpace().GetBZSpace().x + Vector3.up.x), Mathf.RoundToInt(GetBZSpace().GetBZSpace().y + Vector3.up.y), Mathf.RoundToInt(GetBZSpace().GetBZSpace().z + Vector3.up.z)].tag != "SlideBlock" && bb[Mathf.RoundToInt(GetBZSpace().GetBZSpace().x + Vector3.up.x), Mathf.RoundToInt(GetBZSpace().GetBZSpace().y + Vector3.up.y), Mathf.RoundToInt(GetBZSpace().GetBZSpace().z + Vector3.up.z)].tag != "RotateBlock")
                 {
-                    switch (dir[4])
+                    BaseBlock b = bb[Mathf.RoundToInt(GetBZSpace().GetBZSpace().x + Vector3.up.x), Mathf.RoundToInt(GetBZSpace().GetBZSpace().y + Vector3.up.y), Mathf.RoundToInt(GetBZSpace().GetBZSpace().z + Vector3.up.z)];
+
+                    if (b.IsMaster(1) && b.GetCanStart())
                     {
-                        case Direction.FORWARD:
-                            b.SetBZSpace(Mathf.RoundToInt(b.GetBZSpace().GetBZSpace().x + Vector3.forward.x), Mathf.RoundToInt(b.GetBZSpace().GetBZSpace().y + Vector3.forward.y), Mathf.RoundToInt(b.GetBZSpace().GetBZSpace().z + Vector3.forward.z));
-                            bz.MoveBlock(b, Vector3.forward);
-                            break;
+                        if (newRun[4])
+                        {
+                            newRun[4] = false;
+                            return;
+                        }
 
-                        case Direction.BACK:
-                            b.SetBZSpace(Mathf.RoundToInt(b.GetBZSpace().GetBZSpace().x + Vector3.back.x), Mathf.RoundToInt(b.GetBZSpace().GetBZSpace().y + Vector3.back.y), Mathf.RoundToInt(b.GetBZSpace().GetBZSpace().z + Vector3.back.z));
-                            bz.MoveBlock(b, Vector3.back);
-                            break;
+                        if (init[4])
+                        {
+                            switch (dir[4])
+                            {
+                                case Direction.FORWARD:
+                                    target[4] = b.transform.position + Vector3.forward;
+                                    break;
 
-                        case Direction.RIGHT:
-                            b.SetBZSpace(Mathf.RoundToInt(b.GetBZSpace().GetBZSpace().x + Vector3.right.x), Mathf.RoundToInt(b.GetBZSpace().GetBZSpace().y + Vector3.right.y), Mathf.RoundToInt(b.GetBZSpace().GetBZSpace().z + Vector3.right.z));
-                            bz.MoveBlock(b, Vector3.right);
-                            break;
+                                case Direction.BACK:
+                                    target[4] = b.transform.position + Vector3.back;
+                                    break;
 
-                        case Direction.LEFT:
-                            b.SetBZSpace(Mathf.RoundToInt(b.GetBZSpace().GetBZSpace().x + Vector3.left.x), Mathf.RoundToInt(b.GetBZSpace().GetBZSpace().y + Vector3.left.y), Mathf.RoundToInt(b.GetBZSpace().GetBZSpace().z + Vector3.left.z));
-                            bz.MoveBlock(b, Vector3.left);
-                            break;
+                                case Direction.RIGHT:
+                                    target[4] = b.transform.position + Vector3.right;
+                                    break;
+
+                                case Direction.LEFT:
+                                    target[4] = b.transform.position + Vector3.left;
+                                    break;
+                            }
+
+                            init[4] = false;
+                        }
+
+                        if (InRange(target[4]))
+                        {
+                            if (bb[Mathf.RoundToInt(target[0].x - bz.transform.position.x), Mathf.RoundToInt(target[0].y - bz.transform.position.y), Mathf.RoundToInt(target[0].z - bz.transform.position.z)] == null || bb[Mathf.RoundToInt(target[0].x - bz.transform.position.x), Mathf.RoundToInt(target[0].y - bz.transform.position.y), Mathf.RoundToInt(target[0].z - bz.transform.position.z)].transform.IsChildOf(b.transform))
+                            {
+                                b.transform.position = Vector3.MoveTowards(b.transform.position, target[4], 1 * Time.deltaTime);
+                            }
+                        }
+
+                        if (b.transform.position.x == target[4].x && b.transform.position.y == target[4].y && b.transform.position.z == target[4].z)
+                        {
+                            b.SetCanStart(false);
+
+                            switch (dir[4])
+                            {
+                                case Direction.FORWARD:
+                                    b.SetBZSpace(Mathf.RoundToInt(b.GetBZSpace().GetBZSpace().x + Vector3.forward.x), Mathf.RoundToInt(b.GetBZSpace().GetBZSpace().y + Vector3.forward.y), Mathf.RoundToInt(b.GetBZSpace().GetBZSpace().z + Vector3.forward.z));
+
+                                    if (InRange(b.GetBZSpace().GetBZSpace() + Vector3.forward))
+                                    {
+                                        Transform[] allChildren = b.GetComponentsInChildren<Transform>();
+
+                                        foreach (Transform cb in allChildren)
+                                        {
+                                            bz.MoveBlock(cb.GetComponent<BaseBlock>(), Vector3.forward);
+                                        }
+                                    }
+
+                                    break;
+
+                                case Direction.BACK:
+                                    b.SetBZSpace(Mathf.RoundToInt(b.GetBZSpace().GetBZSpace().x + Vector3.back.x), Mathf.RoundToInt(b.GetBZSpace().GetBZSpace().y + Vector3.back.y), Mathf.RoundToInt(b.GetBZSpace().GetBZSpace().z + Vector3.back.z));
+
+                                    if (InRange(b.GetBZSpace().GetBZSpace() + Vector3.back))
+                                    {
+                                        Transform[] allChildren = b.GetComponentsInChildren<Transform>();
+
+                                        foreach (Transform cb in allChildren)
+                                        {
+                                            bz.MoveBlock(cb.GetComponent<BaseBlock>(), Vector3.back);
+                                        }
+                                    }
+
+                                    break;
+
+                                case Direction.RIGHT:
+                                    b.SetBZSpace(Mathf.RoundToInt(b.GetBZSpace().GetBZSpace().x + Vector3.right.x), Mathf.RoundToInt(b.GetBZSpace().GetBZSpace().y + Vector3.right.y), Mathf.RoundToInt(b.GetBZSpace().GetBZSpace().z + Vector3.right.z));
+
+                                    if (InRange(b.GetBZSpace().GetBZSpace() + Vector3.right))
+                                    {
+                                        Transform[] allChildren = b.GetComponentsInChildren<Transform>();
+
+                                        foreach (Transform cb in allChildren)
+                                        {
+                                            bz.MoveBlock(cb.GetComponent<BaseBlock>(), Vector3.right);
+                                        }
+                                    }
+
+                                    break;
+
+                                case Direction.LEFT:
+                                    b.SetBZSpace(Mathf.RoundToInt(b.GetBZSpace().GetBZSpace().x + Vector3.left.x), Mathf.RoundToInt(b.GetBZSpace().GetBZSpace().y + Vector3.left.y), Mathf.RoundToInt(b.GetBZSpace().GetBZSpace().z + Vector3.left.z));
+
+                                    if (InRange(b.GetBZSpace().GetBZSpace() + Vector3.left))
+                                    {
+                                        Transform[] allChildren = b.GetComponentsInChildren<Transform>();
+
+                                        foreach (Transform cb in allChildren)
+                                        {
+                                            bz.MoveBlock(cb.GetComponent<BaseBlock>(), Vector3.left);
+                                        }
+                                    }
+
+                                    break;
+                            }
+
+                            b.SetPriority(7);
+                            newRun[4] = true;
+                            init[4] = true;
+                        }
                     }
 
-                    init[4] = true;
-                }
-
-                if (init[4])
-                {
-                    switch (dir[4])
+                    else
                     {
-                        case Direction.FORWARD:
-                            target[4] = b.transform.position + Vector3.forward;
-                            break;
-
-                        case Direction.BACK:
-                            target[4] = b.transform.position + Vector3.back;
-                            break;
-
-                        case Direction.RIGHT:
-                            target[4] = b.transform.position + Vector3.right;
-                            break;
-
-                        case Direction.LEFT:
-                            target[4] = b.transform.position + Vector3.left;
-                            break;
+                        newRun[4] = true;
                     }
-
-                    init[4] = false;
-                }
-
-                Debug.Log(target[4]);
-
-                if (InRange(target[4]))
-                {
-                    b.transform.position = Vector3.MoveTowards(b.transform.position, target[4], 1 * Time.deltaTime);
                 }
             }
         }
 
-        if (InRange(GetBZSpace().GetBZSpace() + Vector3.down))
+        if (isActive[5] && isPowered)
         {
-            if (bb[Mathf.RoundToInt(GetBZSpace().GetBZSpace().x + Vector3.down.x), Mathf.RoundToInt(GetBZSpace().GetBZSpace().y + Vector3.down.y), Mathf.RoundToInt(GetBZSpace().GetBZSpace().z + Vector3.down.z)] != null && bb[Mathf.RoundToInt(GetBZSpace().GetBZSpace().x + Vector3.down.x), Mathf.RoundToInt(GetBZSpace().GetBZSpace().y + Vector3.down.y), Mathf.RoundToInt(GetBZSpace().GetBZSpace().z + Vector3.down.z)].tag != "StaticBlock" && bb[Mathf.RoundToInt(GetBZSpace().GetBZSpace().x + Vector3.down.x), Mathf.RoundToInt(GetBZSpace().GetBZSpace().y + Vector3.down.y), Mathf.RoundToInt(GetBZSpace().GetBZSpace().z + Vector3.down.z)].tag != "SlideBlock")
+            if (InRange(GetBZSpace().GetBZSpace() + Vector3.down))
             {
-                BaseBlock b = bb[Mathf.RoundToInt(GetBZSpace().GetBZSpace().x + Vector3.down.x), Mathf.RoundToInt(GetBZSpace().GetBZSpace().y + Vector3.down.y), Mathf.RoundToInt(GetBZSpace().GetBZSpace().z + Vector3.down.z)];
-
-                if (b.transform.position.x >= target[5].x && b.transform.position.y >= target[5].y && b.transform.position.z >= target[5].z)
+                if (bb[Mathf.RoundToInt(GetBZSpace().GetBZSpace().x + Vector3.down.x), Mathf.RoundToInt(GetBZSpace().GetBZSpace().y + Vector3.down.y), Mathf.RoundToInt(GetBZSpace().GetBZSpace().z + Vector3.down.z)] != null && bb[Mathf.RoundToInt(GetBZSpace().GetBZSpace().x + Vector3.down.x), Mathf.RoundToInt(GetBZSpace().GetBZSpace().y + Vector3.down.y), Mathf.RoundToInt(GetBZSpace().GetBZSpace().z + Vector3.down.z)].transform.parent == null && bb[Mathf.RoundToInt(GetBZSpace().GetBZSpace().x + Vector3.down.x), Mathf.RoundToInt(GetBZSpace().GetBZSpace().y + Vector3.down.y), Mathf.RoundToInt(GetBZSpace().GetBZSpace().z + Vector3.down.z)].tag != "StaticBlock" && bb[Mathf.RoundToInt(GetBZSpace().GetBZSpace().x + Vector3.down.x), Mathf.RoundToInt(GetBZSpace().GetBZSpace().y + Vector3.down.y), Mathf.RoundToInt(GetBZSpace().GetBZSpace().z + Vector3.down.z)].tag != "SlideBlock" && bb[Mathf.RoundToInt(GetBZSpace().GetBZSpace().x + Vector3.down.x), Mathf.RoundToInt(GetBZSpace().GetBZSpace().y + Vector3.down.y), Mathf.RoundToInt(GetBZSpace().GetBZSpace().z + Vector3.down.z)].tag != "RotateBlock")
                 {
-                    switch (dir[5])
+                    BaseBlock b = bb[Mathf.RoundToInt(GetBZSpace().GetBZSpace().x + Vector3.down.x), Mathf.RoundToInt(GetBZSpace().GetBZSpace().y + Vector3.down.y), Mathf.RoundToInt(GetBZSpace().GetBZSpace().z + Vector3.down.z)];
+
+                    if (b.IsMaster(2) && b.GetCanStart())
                     {
-                        case Direction.FORWARD:
-                            b.SetBZSpace(Mathf.RoundToInt(b.GetBZSpace().GetBZSpace().x + Vector3.forward.x), Mathf.RoundToInt(b.GetBZSpace().GetBZSpace().y + Vector3.forward.y), Mathf.RoundToInt(b.GetBZSpace().GetBZSpace().z + Vector3.forward.z));
-                            bz.MoveBlock(b, Vector3.forward);
-                            break;
+                        if (newRun[5])
+                        {
+                            newRun[5] = false;
+                            return;
+                        }
 
-                        case Direction.BACK:
-                            b.SetBZSpace(Mathf.RoundToInt(b.GetBZSpace().GetBZSpace().x + Vector3.back.x), Mathf.RoundToInt(b.GetBZSpace().GetBZSpace().y + Vector3.back.y), Mathf.RoundToInt(b.GetBZSpace().GetBZSpace().z + Vector3.back.z));
-                            bz.MoveBlock(b, Vector3.back);
-                            break;
+                        if (init[5])
+                        {
+                            switch (dir[5])
+                            {
+                                case Direction.FORWARD:
+                                    target[5] = b.transform.position + Vector3.forward;
+                                    break;
 
-                        case Direction.RIGHT:
-                            b.SetBZSpace(Mathf.RoundToInt(b.GetBZSpace().GetBZSpace().x + Vector3.right.x), Mathf.RoundToInt(b.GetBZSpace().GetBZSpace().y + Vector3.right.y), Mathf.RoundToInt(b.GetBZSpace().GetBZSpace().z + Vector3.right.z));
-                            bz.MoveBlock(b, Vector3.right);
-                            break;
+                                case Direction.BACK:
+                                    target[5] = b.transform.position + Vector3.back;
+                                    break;
 
-                        case Direction.LEFT:
-                            b.SetBZSpace(Mathf.RoundToInt(b.GetBZSpace().GetBZSpace().x + Vector3.left.x), Mathf.RoundToInt(b.GetBZSpace().GetBZSpace().y + Vector3.left.y), Mathf.RoundToInt(b.GetBZSpace().GetBZSpace().z + Vector3.left.z));
-                            bz.MoveBlock(b, Vector3.left);
+                                case Direction.RIGHT:
+                                    target[5] = b.transform.position + Vector3.right;
+                                    break;
 
-                            break;
+                                case Direction.LEFT:
+                                    target[5] = b.transform.position + Vector3.left;
+                                    break;
+                            }
+
+                            init[5] = false;
+                        }
+
+                        if (InRange(target[5]))
+                        {
+                            if (bb[Mathf.RoundToInt(target[0].x - bz.transform.position.x), Mathf.RoundToInt(target[0].y - bz.transform.position.y), Mathf.RoundToInt(target[0].z - bz.transform.position.z)] == null || bb[Mathf.RoundToInt(target[0].x - bz.transform.position.x), Mathf.RoundToInt(target[0].y - bz.transform.position.y), Mathf.RoundToInt(target[0].z - bz.transform.position.z)].transform.IsChildOf(b.transform))
+                            {
+                                b.transform.position = Vector3.MoveTowards(b.transform.position, target[5], 1 * Time.deltaTime);
+                            }
+                        }
+
+                        if (b.transform.position.x == target[5].x && b.transform.position.y == target[5].y && b.transform.position.z == target[5].z)
+                        {
+                            b.SetCanStart(false);
+
+                            switch (dir[5])
+                            {
+                                case Direction.FORWARD:
+                                    b.SetBZSpace(Mathf.RoundToInt(b.GetBZSpace().GetBZSpace().x + Vector3.forward.x), Mathf.RoundToInt(b.GetBZSpace().GetBZSpace().y + Vector3.forward.y), Mathf.RoundToInt(b.GetBZSpace().GetBZSpace().z + Vector3.forward.z));
+
+                                    if (InRange(b.GetBZSpace().GetBZSpace() + Vector3.forward))
+                                    {
+                                        Transform[] allChildren = b.GetComponentsInChildren<Transform>();
+
+                                        foreach (Transform cb in allChildren)
+                                        {
+                                            bz.MoveBlock(cb.GetComponent<BaseBlock>(), Vector3.forward);
+                                        }
+                                    }
+
+                                    break;
+
+                                case Direction.BACK:
+                                    b.SetBZSpace(Mathf.RoundToInt(b.GetBZSpace().GetBZSpace().x + Vector3.back.x), Mathf.RoundToInt(b.GetBZSpace().GetBZSpace().y + Vector3.back.y), Mathf.RoundToInt(b.GetBZSpace().GetBZSpace().z + Vector3.back.z));
+
+                                    if (InRange(b.GetBZSpace().GetBZSpace() + Vector3.back))
+                                    {
+                                        Transform[] allChildren = b.GetComponentsInChildren<Transform>();
+
+                                        foreach (Transform cb in allChildren)
+                                        {
+                                            bz.MoveBlock(cb.GetComponent<BaseBlock>(), Vector3.back);
+                                        }
+                                    }
+
+                                    break;
+
+                                case Direction.RIGHT:
+                                    b.SetBZSpace(Mathf.RoundToInt(b.GetBZSpace().GetBZSpace().x + Vector3.right.x), Mathf.RoundToInt(b.GetBZSpace().GetBZSpace().y + Vector3.right.y), Mathf.RoundToInt(b.GetBZSpace().GetBZSpace().z + Vector3.right.z));
+
+                                    if (InRange(b.GetBZSpace().GetBZSpace() + Vector3.right))
+                                    {
+                                        Transform[] allChildren = b.GetComponentsInChildren<Transform>();
+
+                                        foreach (Transform cb in allChildren)
+                                        {
+                                            bz.MoveBlock(cb.GetComponent<BaseBlock>(), Vector3.right);
+                                        }
+                                    }
+
+                                    break;
+
+                                case Direction.LEFT:
+                                    b.SetBZSpace(Mathf.RoundToInt(b.GetBZSpace().GetBZSpace().x + Vector3.left.x), Mathf.RoundToInt(b.GetBZSpace().GetBZSpace().y + Vector3.left.y), Mathf.RoundToInt(b.GetBZSpace().GetBZSpace().z + Vector3.left.z));
+
+                                    if (InRange(b.GetBZSpace().GetBZSpace() + Vector3.left))
+                                    {
+                                        Transform[] allChildren = b.GetComponentsInChildren<Transform>();
+
+                                        foreach (Transform cb in allChildren)
+                                        {
+                                            bz.MoveBlock(cb.GetComponent<BaseBlock>(), Vector3.left);
+                                        }
+                                    }
+
+                                    break;
+                            }
+
+                            b.SetPriority(7);
+                            newRun[5] = true;
+                            init[5] = true;
+                        }
                     }
 
-                    late[5] = true;
-                    init[5] = true;
-                }
-
-                if (init[5])
-                {
-                    switch (dir[5])
+                    else
                     {
-                        case Direction.FORWARD:
-                            target[5] = b.transform.position + Vector3.forward;
-                            break;
-
-                        case Direction.BACK:
-                            target[5] = b.transform.position + Vector3.back;
-                            break;
-
-                        case Direction.RIGHT:
-                            target[5] = b.transform.position + Vector3.right;
-                            break;
-
-                        case Direction.LEFT:
-                            target[5] = b.transform.position + Vector3.left;
-                            break;
+                        newRun[5] = true;
                     }
-
-                    init[5] = false;
-                }
-
-                Debug.Log(target[5]);
-
-                if (InRange(target[5]))
-                {
-                    b.transform.position = Vector3.MoveTowards(b.transform.position, target[5], 1 * Time.deltaTime);
                 }
             }
         }

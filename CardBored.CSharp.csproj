@@ -79,10 +79,17 @@
     <Compile Include="Assets\ProBuilder\API Examples\Runtime Editing\RuntimeEdit.cs" />
     <Compile Include="Assets\Scripts\DefenceBuilding\BZSpace.cs" />
     <Compile Include="Assets\Scripts\DefenceBuilding\BlockFunctionality\BaseBlock.cs" />
+    <Compile Include="Assets\Scripts\DefenceBuilding\BlockFunctionality\PowerNode.cs" />
     <Compile Include="Assets\Scripts\DefenceBuilding\BlockFunctionality\Rotate.cs" />
+    <Compile Include="Assets\Scripts\DefenceBuilding\BlockFunctionality\Signal.cs" />
     <Compile Include="Assets\Scripts\DefenceBuilding\BlockFunctionality\Slide.cs" />
     <Compile Include="Assets\Scripts\DefenceBuilding\BlockFunctionality\Static.cs" />
     <Compile Include="Assets\Scripts\DefenceBuilding\BlockFunctionality\Variable.cs" />
+    <Compile Include="Assets\Scripts\DefenceBuilding\BlockUI\BaseUI.cs" />
+    <Compile Include="Assets\Scripts\DefenceBuilding\BlockUI\RotateUI.cs" />
+    <Compile Include="Assets\Scripts\DefenceBuilding\BlockUI\SlideUI.cs" />
+    <Compile Include="Assets\Scripts\DefenceBuilding\BlockUI\StaticUI.cs" />
+    <Compile Include="Assets\Scripts\DefenceBuilding\BlockUI\VariableUI.cs" />
     <Compile Include="Assets\Scripts\DefenceBuilding\BoundingBox.cs" />
     <Compile Include="Assets\Scripts\DefenceBuilding\EventTimer.cs" />
     <Compile Include="Assets\Scripts\DefenceBuilding\PlaceBlock.cs" />

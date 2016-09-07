@@ -5,24 +5,60 @@ using System.Collections.Generic;
 public class PlaceBlock : MonoBehaviour
 {
     [SerializeField]
-    private GameObject currentBlock;
+    private GameObject[] blocks;
+    private int index;
     private List<GameObject> allBounds = new List<GameObject>();
     private Ray ray;
     private RaycastHit hit;
 
     void Start()
     {
+        index = 0;
         allBounds.AddRange(GameObject.FindGameObjectsWithTag("BuildZone"));
     }
 
     void Update()
     {
+        BlockSelect();
         PlacePoint();
+    }
+
+    void BlockSelect()
+    {
+        if (Input.GetAxisRaw("ScrollWheel") > 0 || Input.GetKeyDown(KeyCode.M))
+        {
+            if (index == blocks.Length - 1)
+            {
+                index = 0;
+            }
+
+            else
+            {
+                index++;
+            }
+
+            Debug.Log(blocks[index]);
+        }
+
+        if (Input.GetAxisRaw("ScrollWheel") < 0 || Input.GetKeyDown(KeyCode.N))
+        {
+            if (index == 0)
+            {
+                index = blocks.Length - 1;
+            }
+
+            else
+            {
+                index--;
+            }
+
+            Debug.Log(blocks[index]);
+        }
     }
 
     void PlacePoint()
     {
-        if (currentBlock != null && Input.GetMouseButtonDown(0))
+        if (blocks[index] != null && Input.GetMouseButtonDown(0))
         {
             ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             if (Physics.Raycast(ray, out hit))
@@ -43,11 +79,10 @@ public class PlaceBlock : MonoBehaviour
 
                     foreach (GameObject go in allBounds)
                     {
-                        // Get placement area transform's bounds and determine the Build Zone's location. Encapsulation?
                         if (go.GetComponent<BoxCollider>().bounds.Contains(placePos))
                         {
                             int x, y, z;
-                            GameObject block = Instantiate(currentBlock, placePos, Quaternion.identity) as GameObject;
+                            GameObject block = Instantiate(blocks[index], placePos, Quaternion.identity) as GameObject;
 
                             if ((placePos.x - 0.5f) % 2 == 1)
                             {
@@ -81,8 +116,13 @@ public class PlaceBlock : MonoBehaviour
 
                             block.GetComponent<BaseBlock>().SetBZSpace(x, y, z);
                             block.GetComponent<BaseBlock>().SetBounds(go.GetComponent<BoundingBox>());
-                            Debug.Log(block.GetComponent<BaseBlock>().GetBZSpace().GetBZSpace());
                             go.GetComponent<BoundingBox>().AddBlock(block.GetComponent<BaseBlock>());
+
+                            if (block.tag == "VariableBlock" && hit.transform.tag == "VariableBlock")
+                            {
+                                block.GetComponent<Variable>().SetParent(hit.transform);
+                                block.transform.rotation = block.transform.parent.rotation;
+                            }
                         }
                     }
                 }
