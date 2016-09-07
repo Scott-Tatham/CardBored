@@ -3,25 +3,24 @@ using System.Collections;
 
 public class EventTimer : MonoBehaviour
 {
-    private bool canDo;
+    bool canDo;
+    bool toggle;
 
     public bool GetCanDo() { return canDo; }
-    
+    public bool GetToggle() { return toggle; }
+
+    public void SetToggle(bool _toggle) { toggle = _toggle; }
+
     void Start()
     {
+        canDo = true;
+        toggle = true;
         InvokeRepeating("ChangeState", 0.0f, 1.5f);
     }
 
     void ChangeState()
     {
-        if (canDo)
-        {
-            canDo = false;
-        }
-
-        else
-        {
-            canDo = true;
-        }
+        canDo = canDo == false ? true : false;
+        toggle = true;
     }
 }

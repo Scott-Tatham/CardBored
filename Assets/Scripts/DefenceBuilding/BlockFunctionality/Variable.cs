@@ -3,7 +3,7 @@ using System.Collections;
 
 public class Variable : BaseBlock
 {
-    private int parentCount;
+    int parentCount;
 
     public int GetParentCount() { return parentCount; }
 

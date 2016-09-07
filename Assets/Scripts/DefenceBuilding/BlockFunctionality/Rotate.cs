@@ -3,7 +3,7 @@ using System.Collections;
 
 public class Rotate : PowerNode
 {
-    private bool[] dir = new bool[6] { true, true, true, true, true, true };
+    bool[] dir = new bool[6] { true, true, true, true, true, true };
 
     protected override void Update()
     {

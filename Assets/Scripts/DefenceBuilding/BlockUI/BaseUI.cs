@@ -3,7 +3,7 @@ using System.Collections;
 
 public class BaseUI : MonoBehaviour
 {
-    private Rect rect;
+    Rect rect;
 
     void Awake()
     {

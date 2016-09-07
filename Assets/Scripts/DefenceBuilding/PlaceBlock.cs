@@ -5,11 +5,11 @@ using System.Collections.Generic;
 public class PlaceBlock : MonoBehaviour
 {
     [SerializeField]
-    private GameObject[] blocks;
-    private int index;
-    private List<GameObject> allBounds = new List<GameObject>();
-    private Ray ray;
-    private RaycastHit hit;
+    GameObject[] blocks;
+    int index;
+    List<GameObject> allBounds = new List<GameObject>();
+    Ray ray;
+    RaycastHit hit;
 
     void Start()
     {

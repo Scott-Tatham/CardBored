@@ -14,10 +14,10 @@ public class Slide : PowerNode
         NULL
     }
 
-    private bool[] init = new bool[6] { true, true, true, true, true, true };
-    private bool[] newRun = new bool[6] { true, true, true, true, true, true };
-    private Vector3[] target = new Vector3[6];
-    private Direction[] dir = new Direction[6]
+    bool[] init = new bool[6] { true, true, true, true, true, true };
+    bool[] newRun = new bool[6] { true, true, true, true, true, true };
+    Vector3[] target = new Vector3[6];
+    Direction[] dir = new Direction[6]
     {
         Direction.RIGHT,
         Direction.LEFT,
