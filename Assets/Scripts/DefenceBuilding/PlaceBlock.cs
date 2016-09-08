@@ -66,62 +66,64 @@ public class PlaceBlock : MonoBehaviour
                 if (Vector3.Distance(hit.point, transform.position) < 4.0f)
                 {
                     Vector3 placePos;
-
-                    if (hit.transform.tag == "Base")
+                    if (hit.transform.tag != "BuildZone")
                     {
-                        placePos = new Vector3(hit.transform.position.x, hit.transform.position.y + 0.5f, hit.transform.position.z);
-                    }
-
-                    else
-                    {
-                        placePos = hit.transform.position + hit.normal;
-                    }
-
-                    foreach (GameObject go in allBounds)
-                    {
-                        if (go.GetComponent<BoxCollider>().bounds.Contains(placePos))
+                        if (hit.transform.tag == "Base")
                         {
-                            int x, y, z;
-                            GameObject block = Instantiate(blocks[index], placePos, Quaternion.identity) as GameObject;
+                            placePos = new Vector3(hit.transform.position.x, hit.transform.position.y + 0.5f, hit.transform.position.z);
+                        }
 
-                            if ((placePos.x - 0.5f) % 2 == 1)
+                        else
+                        {
+                            placePos = hit.transform.position + hit.normal;
+                        }
+
+                        foreach (GameObject go in allBounds)
+                        {
+                            if (go.GetComponent<BoxCollider>().bounds.Contains(placePos))
                             {
-                                x = Mathf.RoundToInt(placePos.x - go.transform.position.x) - 1;
-                            }
+                                int x, y, z;
+                                GameObject block = Instantiate(blocks[index], placePos, Quaternion.identity) as GameObject;
 
-                            else
-                            {
-                                x = Mathf.RoundToInt(placePos.x - go.transform.position.x);
-                            }
+                                if ((placePos.x - 0.5f) % 2 == 1)
+                                {
+                                    x = Mathf.RoundToInt(placePos.x - go.transform.position.x) - 1;
+                                }
 
-                            if ((placePos.y - 0.5f) % 2 == 1)
-                            {
-                                y = Mathf.RoundToInt(placePos.y - go.transform.position.y) - 1;
-                            }
+                                else
+                                {
+                                    x = Mathf.RoundToInt(placePos.x - go.transform.position.x);
+                                }
 
-                            else
-                            {
-                                y = Mathf.RoundToInt(placePos.y - go.transform.position.y);
-                            }
+                                if ((placePos.y - 0.5f) % 2 == 1)
+                                {
+                                    y = Mathf.RoundToInt(placePos.y - go.transform.position.y) - 1;
+                                }
 
-                            if ((placePos.z - 0.5f) % 2 == 1)
-                            {
-                                z = Mathf.RoundToInt(placePos.z - go.transform.position.z) - 1;
-                            }
+                                else
+                                {
+                                    y = Mathf.RoundToInt(placePos.y - go.transform.position.y);
+                                }
 
-                            else
-                            {
-                                z = Mathf.RoundToInt(placePos.z - go.transform.position.z);
-                            }
+                                if ((placePos.z - 0.5f) % 2 == 1)
+                                {
+                                    z = Mathf.RoundToInt(placePos.z - go.transform.position.z) - 1;
+                                }
 
-                            block.GetComponent<BaseBlock>().SetBZSpace(x, y, z);
-                            block.GetComponent<BaseBlock>().SetBounds(go.GetComponent<BoundingBox>());
-                            go.GetComponent<BoundingBox>().AddBlock(block.GetComponent<BaseBlock>());
+                                else
+                                {
+                                    z = Mathf.RoundToInt(placePos.z - go.transform.position.z);
+                                }
 
-                            if (block.tag == "VariableBlock" && hit.transform.tag == "VariableBlock")
-                            {
-                                block.GetComponent<Variable>().SetParent(hit.transform);
-                                block.transform.rotation = block.transform.parent.rotation;
+                                block.GetComponent<BaseBlock>().SetBZSpace(x, y, z);
+                                block.GetComponent<BaseBlock>().SetBounds(go.GetComponent<BoundingBox>());
+                                go.GetComponent<BoundingBox>().AddBlock(block.GetComponent<BaseBlock>());
+
+                                if (block.tag == "VariableBlock" && hit.transform.tag == "VariableBlock")
+                                {
+                                    block.GetComponent<Variable>().SetParent(hit.transform);
+                                    block.transform.rotation = block.transform.parent.rotation;
+                                }
                             }
                         }
                     }
