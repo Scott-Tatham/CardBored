@@ -1,8 +1,6 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2015
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CardBored.CSharp.Plugins", "CardBored.CSharp.Plugins.csproj", "{8E79956D-6208-91ED-33F9-B4189B71F4E2}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CardBored.CSharp", "CardBored.CSharp.csproj", "{32B954AE-0879-C379-FEA1-6BFACB35953C}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CardBored.CSharp.Editor", "CardBored.CSharp.Editor.csproj", "{D1E1A1B4-F433-D7C8-F995-C99C91E4632D}"
@@ -13,10 +11,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{8E79956D-6208-91ED-33F9-B4189B71F4E2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{8E79956D-6208-91ED-33F9-B4189B71F4E2}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{8E79956D-6208-91ED-33F9-B4189B71F4E2}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{8E79956D-6208-91ED-33F9-B4189B71F4E2}.Release|Any CPU.Build.0 = Release|Any CPU
 		{32B954AE-0879-C379-FEA1-6BFACB35953C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{32B954AE-0879-C379-FEA1-6BFACB35953C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{32B954AE-0879-C379-FEA1-6BFACB35953C}.Release|Any CPU.ActiveCfg = Release|Any CPU
