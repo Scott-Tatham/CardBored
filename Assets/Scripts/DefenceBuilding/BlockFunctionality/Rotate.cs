@@ -3,13 +3,9 @@ using System.Collections;
 
 public class Rotate : PowerNode
 {
-<<<<<<< HEAD
     [SerializeField]
     float turnSpeed;
     bool[] dir = new bool[6] { true, true, true, true, true, true };
-=======
-    private bool[] dir = new bool[6] { true, true, true, true, true, true };
->>>>>>> parent of 7df8639... More Of The Same Defence Building Stuff
 
     protected override void Update()
     {

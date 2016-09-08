@@ -13,19 +13,12 @@ public class Slide : PowerNode
         DOWN
     }
 
-<<<<<<< HEAD
     [SerializeField]
     float moveSpeed;
     bool[] init = new bool[6] { true, true, true, true, true, true };
     bool[] newRun = new bool[6] { true, true, true, true, true, true };
     Vector3[] target = new Vector3[6];
     Direction[] dir = new Direction[6]
-=======
-    private bool[] init = new bool[6] { true, true, true, true, true, true };
-    private bool[] newRun = new bool[6] { true, true, true, true, true, true };
-    private Vector3[] target = new Vector3[6];
-    private Direction[] dir = new Direction[6]
->>>>>>> parent of 7df8639... More Of The Same Defence Building Stuff
     {
         Direction.RIGHT,
         Direction.LEFT,
@@ -110,7 +103,7 @@ public class Slide : PowerNode
                             switch (dir[i])
                             {
                                 case Direction.FORWARD:
-                                    face[i].SetBZSpace(Mathf.RoundToInt(face[i].GetBZSpace().GetBZSpace().x + Vector3.forward.x), Mathf.RoundToInt(face[0].GetBZSpace().GetBZSpace().y + Vector3.forward.y), Mathf.RoundToInt(face[i].GetBZSpace().GetBZSpace().z + Vector3.forward.z));
+                                    face[i].SetBZSpace(Mathf.RoundToInt(face[i].GetBZSpace().GetBZSpace().x + Vector3.forward.x), Mathf.RoundToInt(face[i].GetBZSpace().GetBZSpace().y + Vector3.forward.y), Mathf.RoundToInt(face[i].GetBZSpace().GetBZSpace().z + Vector3.forward.z));
 
                                     if (InRange(face[i].GetBZSpace().GetBZSpace() + Vector3.forward))
                                     {
