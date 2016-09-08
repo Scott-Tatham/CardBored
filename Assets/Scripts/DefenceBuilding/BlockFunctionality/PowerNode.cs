@@ -7,6 +7,8 @@ public class PowerNode : BaseBlock
     protected bool isPowered;
     protected int powerIndex;
     protected bool[] stream = new bool[6] { true, true, true, true, true, true };
+    
+    public bool GetIsPowered() { return isPowered; }
 
     void Start()
     {

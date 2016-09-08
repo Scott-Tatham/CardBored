@@ -6,6 +6,7 @@ public class BaseBlock : MonoBehaviour
     protected bool canStart;
     protected int priority;
     protected bool[] isActive = new bool[6] { true, true, true, true, true, true };
+    protected BaseBlock[] face = new BaseBlock[6];
     protected BaseBlock[,,] bb;
     protected BZSpace bzSpace;
     protected BoundingBox bz;
@@ -59,5 +60,116 @@ public class BaseBlock : MonoBehaviour
         }
 
         return false;
+    }
+
+    protected void SetFace()
+    {
+        if (InRange(GetBZSpace().GetBZSpace() + Vector3.forward))
+        {
+            if (bb[Mathf.RoundToInt(GetBZSpace().GetBZSpace().x + Vector3.forward.x), Mathf.RoundToInt(GetBZSpace().GetBZSpace().y + Vector3.forward.y), Mathf.RoundToInt(GetBZSpace().GetBZSpace().z + Vector3.forward.z)] != null)
+            {
+                face[0] = bb[Mathf.RoundToInt(GetBZSpace().GetBZSpace().x + Vector3.forward.x), Mathf.RoundToInt(GetBZSpace().GetBZSpace().y + Vector3.forward.y), Mathf.RoundToInt(GetBZSpace().GetBZSpace().z + Vector3.forward.z)];
+            }
+
+            else
+            {
+                face[0] = null;
+            }
+        }
+
+        else
+        {
+            face[0] = null;
+        }
+
+        if (InRange(GetBZSpace().GetBZSpace() + Vector3.back))
+        {
+            if (bb[Mathf.RoundToInt(GetBZSpace().GetBZSpace().x + Vector3.back.x), Mathf.RoundToInt(GetBZSpace().GetBZSpace().y + Vector3.back.y), Mathf.RoundToInt(GetBZSpace().GetBZSpace().z + Vector3.back.z)] != null)
+            {
+                face[1] = bb[Mathf.RoundToInt(GetBZSpace().GetBZSpace().x + Vector3.back.x), Mathf.RoundToInt(GetBZSpace().GetBZSpace().y + Vector3.back.y), Mathf.RoundToInt(GetBZSpace().GetBZSpace().z + Vector3.back.z)];
+            }
+
+            else
+            {
+                face[1] = null;
+            }
+        }
+
+        else
+        {
+            face[1] = null;
+        }
+
+        if (InRange(GetBZSpace().GetBZSpace() + Vector3.right))
+        {
+            if (bb[Mathf.RoundToInt(GetBZSpace().GetBZSpace().x + Vector3.right.x), Mathf.RoundToInt(GetBZSpace().GetBZSpace().y + Vector3.right.y), Mathf.RoundToInt(GetBZSpace().GetBZSpace().z + Vector3.right.z)] != null)
+            {
+                face[2] = bb[Mathf.RoundToInt(GetBZSpace().GetBZSpace().x + Vector3.right.x), Mathf.RoundToInt(GetBZSpace().GetBZSpace().y + Vector3.right.y), Mathf.RoundToInt(GetBZSpace().GetBZSpace().z + Vector3.right.z)];
+            }
+
+            else
+            {
+                face[2] = null;
+            }
+        }
+
+        else
+        {
+            face[2] = null;
+        }
+
+        if (InRange(GetBZSpace().GetBZSpace() + Vector3.left))
+        {
+            if (bb[Mathf.RoundToInt(GetBZSpace().GetBZSpace().x + Vector3.left.x), Mathf.RoundToInt(GetBZSpace().GetBZSpace().y + Vector3.left.y), Mathf.RoundToInt(GetBZSpace().GetBZSpace().z + Vector3.left.z)] != null)
+            {
+                face[3] = bb[Mathf.RoundToInt(GetBZSpace().GetBZSpace().x + Vector3.left.x), Mathf.RoundToInt(GetBZSpace().GetBZSpace().y + Vector3.left.y), Mathf.RoundToInt(GetBZSpace().GetBZSpace().z + Vector3.left.z)];
+            }
+
+            else
+            {
+                face[3] = null;
+            }
+        }
+
+        else
+        {
+            face[3] = null;
+        }
+
+        if (InRange(GetBZSpace().GetBZSpace() + Vector3.up))
+        {
+            if (bb[Mathf.RoundToInt(GetBZSpace().GetBZSpace().x + Vector3.up.x), Mathf.RoundToInt(GetBZSpace().GetBZSpace().y + Vector3.up.y), Mathf.RoundToInt(GetBZSpace().GetBZSpace().z + Vector3.up.z)] != null)
+            {
+                face[4] = bb[Mathf.RoundToInt(GetBZSpace().GetBZSpace().x + Vector3.up.x), Mathf.RoundToInt(GetBZSpace().GetBZSpace().y + Vector3.up.y), Mathf.RoundToInt(GetBZSpace().GetBZSpace().z + Vector3.up.z)];
+            }
+
+            else
+            {
+                face[4] = null;
+            }
+        }
+
+        else
+        {
+            face[4] = null;
+        }
+
+        if (InRange(GetBZSpace().GetBZSpace() + Vector3.down))
+        {
+            if (bb[Mathf.RoundToInt(GetBZSpace().GetBZSpace().x + Vector3.down.x), Mathf.RoundToInt(GetBZSpace().GetBZSpace().y + Vector3.down.y), Mathf.RoundToInt(GetBZSpace().GetBZSpace().z + Vector3.down.z)] != null)
+            {
+                face[5] = bb[Mathf.RoundToInt(GetBZSpace().GetBZSpace().x + Vector3.down.x), Mathf.RoundToInt(GetBZSpace().GetBZSpace().y + Vector3.down.y), Mathf.RoundToInt(GetBZSpace().GetBZSpace().z + Vector3.down.z)];
+            }
+
+            else
+            {
+                face[5] = null;
+            }
+        }
+
+        else
+        {
+            face[5] = null;
+        }
     }
 }

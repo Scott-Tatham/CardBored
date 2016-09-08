@@ -59,6 +59,12 @@
     <Reference Include="UnityEditor">
       <HintPath>Library\UnityAssemblies\UnityEditor.dll</HintPath>
     </Reference>
+    <Reference Include="Pathfinding.Ionic.Zip.Reduced">
+      <HintPath>Assets\Plugins\AstarPathfindingProject\Plugins\DotNetZip\Pathfinding.Ionic.Zip.Reduced.dll</HintPath>
+    </Reference>
+    <Reference Include="Pathfinding.JsonFx">
+      <HintPath>Assets\Plugins\AstarPathfindingProject\Plugins\JsonFx\Pathfinding.JsonFx.dll</HintPath>
+    </Reference>
     <Reference Include="ProBuilderCore-Unity5">
       <HintPath>Assets\ProBuilder\Classes\ProBuilderCore-Unity5.dll</HintPath>
     </Reference>
@@ -71,6 +77,15 @@
     <Reference Include="Triangle">
       <HintPath>Assets\ProBuilder\Classes\ClassesLib\Triangle.dll</HintPath>
     </Reference>
+<<<<<<< HEAD
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="CardBored.CSharp.Plugins.csproj">
+      <Project>{8E79956D-6208-91ED-33F9-B4189B71F4E2}</Project>
+      <Name>CardBored.CSharp.Plugins</Name>
+    </ProjectReference>
+=======
+>>>>>>> parent of 7df8639... More Of The Same Defence Building Stuff
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\ProBuilder\API Examples\Icosphere FFT\Scripts\CameraControls.cs" />
@@ -84,6 +99,11 @@
     <Compile Include="Assets\Scripts\DefenceBuilding\BlockFunctionality\Signal.cs" />
     <Compile Include="Assets\Scripts\DefenceBuilding\BlockFunctionality\Slide.cs" />
     <Compile Include="Assets\Scripts\DefenceBuilding\BlockFunctionality\Static.cs" />
+<<<<<<< HEAD
+    <Compile Include="Assets\Scripts\DefenceBuilding\BlockFunctionality\Transmit.cs" />
+    <Compile Include="Assets\Scripts\DefenceBuilding\BlockFunctionality\Turret.cs" />
+=======
+>>>>>>> parent of 7df8639... More Of The Same Defence Building Stuff
     <Compile Include="Assets\Scripts\DefenceBuilding\BlockFunctionality\Variable.cs" />
     <Compile Include="Assets\Scripts\DefenceBuilding\BlockUI\BaseUI.cs" />
     <Compile Include="Assets\Scripts\DefenceBuilding\BlockUI\RotateUI.cs" />
