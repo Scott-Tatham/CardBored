@@ -10,7 +10,7 @@ public class Signal : BaseBlock
         AND,
         OR,
     }
-    
+
     bool isOn;
     BlockMode bm;
 
@@ -38,13 +38,11 @@ public class Signal : BaseBlock
             switch (bm)
             {
                 case BlockMode.SWITCH:
-                    isOn = isOn == false ? true : false;
-
                     for (int i = 0; i < face.Length; i++)
                     {
-                        if (face[0] != null && face[0].GetComponent<PowerNode>() != null)
+                        if (face[i] != null && face[i].GetComponent<PowerNode>() != null)
                         {
-                            face[0].GetComponent<PowerNode>().State(isOn);
+                            face[i].GetComponent<PowerNode>().AlterState(isOn);
                         }
                     }
 
