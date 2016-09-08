@@ -61,6 +61,12 @@
     <Reference Include="UnityEditor">
       <HintPath>Library\UnityAssemblies\UnityEditor.dll</HintPath>
     </Reference>
+    <Reference Include="Pathfinding.Ionic.Zip.Reduced">
+      <HintPath>Assets\Plugins\AstarPathfindingProject\Plugins\DotNetZip\Pathfinding.Ionic.Zip.Reduced.dll</HintPath>
+    </Reference>
+    <Reference Include="Pathfinding.JsonFx">
+      <HintPath>Assets\Plugins\AstarPathfindingProject\Plugins\JsonFx\Pathfinding.JsonFx.dll</HintPath>
+    </Reference>
     <Reference Include="ProBuilderCore-Unity5">
       <HintPath>Assets\ProBuilder\Classes\ProBuilderCore-Unity5.dll</HintPath>
     </Reference>
@@ -72,12 +78,6 @@
     </Reference>
     <Reference Include="Triangle">
       <HintPath>Assets\ProBuilder\Classes\ClassesLib\Triangle.dll</HintPath>
-    </Reference>
-    <Reference Include="Pathfinding.JsonFx">
-      <HintPath>Assets\Plugins\AstarPathfindingProject\Plugins\JsonFx\Pathfinding.JsonFx.dll</HintPath>
-    </Reference>
-    <Reference Include="Pathfinding.Ionic.Zip.Reduced">
-      <HintPath>Assets\Plugins\AstarPathfindingProject\Plugins\DotNetZip\Pathfinding.Ionic.Zip.Reduced.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -99,6 +99,7 @@
     <Compile Include="Assets\Scripts\DefenceBuilding\BlockFunctionality\Signal.cs" />
     <Compile Include="Assets\Scripts\DefenceBuilding\BlockFunctionality\Slide.cs" />
     <Compile Include="Assets\Scripts\DefenceBuilding\BlockFunctionality\Static.cs" />
+    <Compile Include="Assets\Scripts\DefenceBuilding\BlockFunctionality\Transmit.cs" />
     <Compile Include="Assets\Scripts\DefenceBuilding\BlockFunctionality\Turret.cs" />
     <Compile Include="Assets\Scripts\DefenceBuilding\BlockFunctionality\Variable.cs" />
     <Compile Include="Assets\Scripts\DefenceBuilding\BlockUI\BaseUI.cs" />

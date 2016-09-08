@@ -12,16 +12,13 @@ public class Signal : BaseBlock
     }
 
     bool isOn;
-    bool buttPress;
-    float buttTime;
     BlockMode bm;
 
     protected override void Awake()
     {
         base.Awake();
-        
-        buttTime = 0.5f;
-        bm = BlockMode.BUTTON;
+
+        bm = BlockMode.SWITCH;
     }
 
     protected override void Update()
@@ -35,85 +32,33 @@ public class Signal : BaseBlock
     {
         if (Input.GetKeyDown(KeyCode.Semicolon))
         {
+            SetFace();
+
             switch (bm)
             {
                 case BlockMode.SWITCH:
                     isOn = isOn == false ? true : false;
-                    OnOff();
 
-                    break;
-
-                case BlockMode.BUTTON:
-                    if (!buttPress)
+                    for (int i = 0; i < face.Length; i++)
                     {
-                        Debug.Log("Dafuq");
-                        StartCoroutine(ButtonTimer(buttTime));
+                        if (face[0] != null && face[0].GetComponent<PowerNode>() != null)
+                        {
+                            face[0].GetComponent<PowerNode>().State(isOn);
+                        }
                     }
 
                     break;
 
+                case BlockMode.BUTTON:
+                    break;
+
                 case BlockMode.AND:
+
                     break;
 
                 case BlockMode.OR:
                     break;
             }
         }
-    }
-
-    void OnOff()
-    {
-        if (bb[Mathf.RoundToInt(GetBZSpace().GetBZSpace().x + Vector3.forward.x), Mathf.RoundToInt(GetBZSpace().GetBZSpace().y + Vector3.forward.y), Mathf.RoundToInt(GetBZSpace().GetBZSpace().z + Vector3.forward.z)] != null && bb[Mathf.RoundToInt(GetBZSpace().GetBZSpace().x + Vector3.forward.x), Mathf.RoundToInt(GetBZSpace().GetBZSpace().y + Vector3.forward.y), Mathf.RoundToInt(GetBZSpace().GetBZSpace().z + Vector3.forward.z)].GetComponent<PowerNode>() != null)
-        {
-            BaseBlock b = bb[Mathf.RoundToInt(GetBZSpace().GetBZSpace().x + Vector3.forward.x), Mathf.RoundToInt(GetBZSpace().GetBZSpace().y + Vector3.forward.y), Mathf.RoundToInt(GetBZSpace().GetBZSpace().z + Vector3.forward.z)];
-
-            b.GetComponent<PowerNode>().State(isOn);
-        }
-
-        if (bb[Mathf.RoundToInt(GetBZSpace().GetBZSpace().x + Vector3.back.x), Mathf.RoundToInt(GetBZSpace().GetBZSpace().y + Vector3.back.y), Mathf.RoundToInt(GetBZSpace().GetBZSpace().z + Vector3.back.z)] != null && bb[Mathf.RoundToInt(GetBZSpace().GetBZSpace().x + Vector3.back.x), Mathf.RoundToInt(GetBZSpace().GetBZSpace().y + Vector3.back.y), Mathf.RoundToInt(GetBZSpace().GetBZSpace().z + Vector3.back.z)].GetComponent<PowerNode>() != null)
-        {
-            BaseBlock b = bb[Mathf.RoundToInt(GetBZSpace().GetBZSpace().x + Vector3.back.x), Mathf.RoundToInt(GetBZSpace().GetBZSpace().y + Vector3.back.y), Mathf.RoundToInt(GetBZSpace().GetBZSpace().z + Vector3.back.z)];
-
-            b.GetComponent<PowerNode>().State(isOn);
-        }
-
-        if (bb[Mathf.RoundToInt(GetBZSpace().GetBZSpace().x + Vector3.forward.x), Mathf.RoundToInt(GetBZSpace().GetBZSpace().y + Vector3.forward.y), Mathf.RoundToInt(GetBZSpace().GetBZSpace().z + Vector3.forward.z)] != null && bb[Mathf.RoundToInt(GetBZSpace().GetBZSpace().x + Vector3.forward.x), Mathf.RoundToInt(GetBZSpace().GetBZSpace().y + Vector3.forward.y), Mathf.RoundToInt(GetBZSpace().GetBZSpace().z + Vector3.forward.z)].GetComponent<PowerNode>() != null)
-        {
-            BaseBlock b = bb[Mathf.RoundToInt(GetBZSpace().GetBZSpace().x + Vector3.forward.x), Mathf.RoundToInt(GetBZSpace().GetBZSpace().y + Vector3.forward.y), Mathf.RoundToInt(GetBZSpace().GetBZSpace().z + Vector3.forward.z)];
-
-            b.GetComponent<PowerNode>().State(isOn);
-        }
-
-        if (bb[Mathf.RoundToInt(GetBZSpace().GetBZSpace().x + Vector3.forward.x), Mathf.RoundToInt(GetBZSpace().GetBZSpace().y + Vector3.forward.y), Mathf.RoundToInt(GetBZSpace().GetBZSpace().z + Vector3.forward.z)] != null && bb[Mathf.RoundToInt(GetBZSpace().GetBZSpace().x + Vector3.forward.x), Mathf.RoundToInt(GetBZSpace().GetBZSpace().y + Vector3.forward.y), Mathf.RoundToInt(GetBZSpace().GetBZSpace().z + Vector3.forward.z)].GetComponent<PowerNode>() != null)
-        {
-            BaseBlock b = bb[Mathf.RoundToInt(GetBZSpace().GetBZSpace().x + Vector3.forward.x), Mathf.RoundToInt(GetBZSpace().GetBZSpace().y + Vector3.forward.y), Mathf.RoundToInt(GetBZSpace().GetBZSpace().z + Vector3.forward.z)];
-
-            b.GetComponent<PowerNode>().State(isOn);
-        }
-
-        if (bb[Mathf.RoundToInt(GetBZSpace().GetBZSpace().x + Vector3.forward.x), Mathf.RoundToInt(GetBZSpace().GetBZSpace().y + Vector3.forward.y), Mathf.RoundToInt(GetBZSpace().GetBZSpace().z + Vector3.forward.z)] != null && bb[Mathf.RoundToInt(GetBZSpace().GetBZSpace().x + Vector3.forward.x), Mathf.RoundToInt(GetBZSpace().GetBZSpace().y + Vector3.forward.y), Mathf.RoundToInt(GetBZSpace().GetBZSpace().z + Vector3.forward.z)].GetComponent<PowerNode>() != null)
-        {
-            BaseBlock b = bb[Mathf.RoundToInt(GetBZSpace().GetBZSpace().x + Vector3.forward.x), Mathf.RoundToInt(GetBZSpace().GetBZSpace().y + Vector3.forward.y), Mathf.RoundToInt(GetBZSpace().GetBZSpace().z + Vector3.forward.z)];
-
-            b.GetComponent<PowerNode>().State(isOn);
-        }
-
-        if (bb[Mathf.RoundToInt(GetBZSpace().GetBZSpace().x + Vector3.forward.x), Mathf.RoundToInt(GetBZSpace().GetBZSpace().y + Vector3.forward.y), Mathf.RoundToInt(GetBZSpace().GetBZSpace().z + Vector3.forward.z)] != null && bb[Mathf.RoundToInt(GetBZSpace().GetBZSpace().x + Vector3.forward.x), Mathf.RoundToInt(GetBZSpace().GetBZSpace().y + Vector3.forward.y), Mathf.RoundToInt(GetBZSpace().GetBZSpace().z + Vector3.forward.z)].GetComponent<PowerNode>() != null)
-        {
-            BaseBlock b = bb[Mathf.RoundToInt(GetBZSpace().GetBZSpace().x + Vector3.forward.x), Mathf.RoundToInt(GetBZSpace().GetBZSpace().y + Vector3.forward.y), Mathf.RoundToInt(GetBZSpace().GetBZSpace().z + Vector3.forward.z)];
-
-            b.GetComponent<PowerNode>().State(isOn);
-        }
-    }
-
-    IEnumerator ButtonTimer(float _time)
-    {
-        buttPress = true;
-        isOn = true;
-        OnOff();
-        yield return new WaitForSeconds(_time);
-        isOn = false;
-        OnOff();
-        buttPress = false;
     }
 }
