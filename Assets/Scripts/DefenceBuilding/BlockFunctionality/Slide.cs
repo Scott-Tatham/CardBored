@@ -12,21 +12,11 @@ public class Slide : PowerNode
         UP,
         DOWN
     }
-
-    [SerializeField]
-    float moveSpeed;
+    
     bool[] init = new bool[6] { true, true, true, true, true, true };
     bool[] newRun = new bool[6] { true, true, true, true, true, true };
     Vector3[] target = new Vector3[6];
-    Direction[] dir = new Direction[6]
-    {
-        Direction.RIGHT,
-        Direction.LEFT,
-        Direction.BACK,
-        Direction.FORWARD,
-        Direction.RIGHT,
-        Direction.LEFT
-    };
+    Direction[] dir = new Direction[6] { Direction.RIGHT, Direction.LEFT, Direction.BACK, Direction.FORWARD, Direction.RIGHT, Direction.LEFT };
 
     protected override void Update()
     {
@@ -88,15 +78,16 @@ public class Slide : PowerNode
                             init[i] = false;
                         }
 
+                        // True for all children.
                         if (InRange(target[i]))
                         {
                             if (bb[Mathf.RoundToInt(target[i].x - bz.transform.position.x), Mathf.RoundToInt(target[i].y - bz.transform.position.y), Mathf.RoundToInt(target[i].z - bz.transform.position.z)] == null || bb[Mathf.RoundToInt(target[i].x - bz.transform.position.x), Mathf.RoundToInt(target[i].y - bz.transform.position.y), Mathf.RoundToInt(target[i].z - bz.transform.position.z)].transform.IsChildOf(face[i].transform))
                             {
-                                face[i].transform.position = Vector3.MoveTowards(face[i].transform.position, target[i], moveSpeed * Time.deltaTime);
+                                face[i].transform.position = Vector3.MoveTowards(face[i].transform.position, target[i], Time.deltaTime);
                             }
                         }
 
-                        if (face[i].transform.position.x == target[i].x && face[i].transform.position.y == target[i].y && face[i].transform.position.z == target[i].z)
+                        if (face[i].transform.position == target[i])
                         {
                             face[i].SetCanStart(false);
 

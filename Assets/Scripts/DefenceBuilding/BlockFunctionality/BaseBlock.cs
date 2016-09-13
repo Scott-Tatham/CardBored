@@ -11,6 +11,7 @@ public class BaseBlock : MonoBehaviour
     protected BZSpace bzSpace;
     protected BoundingBox bz;
     protected EventTimer et;
+    protected Material mat;
     
     public bool GetCanStart() { return canStart; }
     public int GetPriority() { return priority; }
@@ -22,9 +23,16 @@ public class BaseBlock : MonoBehaviour
 
     protected virtual void Awake()
     {
+        et = GameObject.FindGameObjectWithTag("GameManager").GetComponent<EventTimer>();
+        mat = gameObject.GetComponent<Material>();
+    }
+
+    protected virtual void Start()
+    {
+        mat.SetTextureScale("Tiling", new Vector2(0.5f, 0.5f));
+
         canStart = false;
         priority = 7;
-        et = GameObject.FindGameObjectWithTag("GameManager").GetComponent<EventTimer>();
     }
 
     protected virtual void Update()
@@ -62,13 +70,13 @@ public class BaseBlock : MonoBehaviour
         return false;
     }
 
-    protected void SetFace()
+    protected void SetFace(int _multi = 1)
     {
-        if (InRange(GetBZSpace().GetBZSpace() + Vector3.forward))
+        if (InRange(GetBZSpace().GetBZSpace() + (Vector3.forward * _multi)))
         {
-            if (bb[Mathf.RoundToInt(GetBZSpace().GetBZSpace().x + Vector3.forward.x), Mathf.RoundToInt(GetBZSpace().GetBZSpace().y + Vector3.forward.y), Mathf.RoundToInt(GetBZSpace().GetBZSpace().z + Vector3.forward.z)] != null)
+            if (bb[Mathf.RoundToInt(GetBZSpace().GetBZSpace().x + (Vector3.forward.x * _multi)), Mathf.RoundToInt(GetBZSpace().GetBZSpace().y + (Vector3.forward.y * _multi)), Mathf.RoundToInt(GetBZSpace().GetBZSpace().z + (Vector3.forward.z * _multi))] != null)
             {
-                face[0] = bb[Mathf.RoundToInt(GetBZSpace().GetBZSpace().x + Vector3.forward.x), Mathf.RoundToInt(GetBZSpace().GetBZSpace().y + Vector3.forward.y), Mathf.RoundToInt(GetBZSpace().GetBZSpace().z + Vector3.forward.z)];
+                face[0] = bb[Mathf.RoundToInt(GetBZSpace().GetBZSpace().x + (Vector3.forward.x * _multi)), Mathf.RoundToInt(GetBZSpace().GetBZSpace().y + (Vector3.forward.y * _multi)), Mathf.RoundToInt(GetBZSpace().GetBZSpace().z + (Vector3.forward.z * _multi))];
             }
 
             else
@@ -82,11 +90,11 @@ public class BaseBlock : MonoBehaviour
             face[0] = null;
         }
 
-        if (InRange(GetBZSpace().GetBZSpace() + Vector3.back))
+        if (InRange(GetBZSpace().GetBZSpace() + (Vector3.back * _multi)))
         {
-            if (bb[Mathf.RoundToInt(GetBZSpace().GetBZSpace().x + Vector3.back.x), Mathf.RoundToInt(GetBZSpace().GetBZSpace().y + Vector3.back.y), Mathf.RoundToInt(GetBZSpace().GetBZSpace().z + Vector3.back.z)] != null)
+            if (bb[Mathf.RoundToInt(GetBZSpace().GetBZSpace().x + (Vector3.back.x * _multi)), Mathf.RoundToInt(GetBZSpace().GetBZSpace().y + (Vector3.back.y * _multi)), Mathf.RoundToInt(GetBZSpace().GetBZSpace().z + (Vector3.back.z * _multi))] != null)
             {
-                face[1] = bb[Mathf.RoundToInt(GetBZSpace().GetBZSpace().x + Vector3.back.x), Mathf.RoundToInt(GetBZSpace().GetBZSpace().y + Vector3.back.y), Mathf.RoundToInt(GetBZSpace().GetBZSpace().z + Vector3.back.z)];
+                face[1] = bb[Mathf.RoundToInt(GetBZSpace().GetBZSpace().x + (Vector3.back.x * _multi)), Mathf.RoundToInt(GetBZSpace().GetBZSpace().y + (Vector3.back.y * _multi)), Mathf.RoundToInt(GetBZSpace().GetBZSpace().z + (Vector3.back.z * _multi))];
             }
 
             else
@@ -100,11 +108,11 @@ public class BaseBlock : MonoBehaviour
             face[1] = null;
         }
 
-        if (InRange(GetBZSpace().GetBZSpace() + Vector3.right))
+        if (InRange(GetBZSpace().GetBZSpace() + (Vector3.right * _multi)))
         {
-            if (bb[Mathf.RoundToInt(GetBZSpace().GetBZSpace().x + Vector3.right.x), Mathf.RoundToInt(GetBZSpace().GetBZSpace().y + Vector3.right.y), Mathf.RoundToInt(GetBZSpace().GetBZSpace().z + Vector3.right.z)] != null)
+            if (bb[Mathf.RoundToInt(GetBZSpace().GetBZSpace().x + (Vector3.right.x * _multi)), Mathf.RoundToInt(GetBZSpace().GetBZSpace().y + (Vector3.right.y * _multi)), Mathf.RoundToInt(GetBZSpace().GetBZSpace().z + (Vector3.right.z * _multi))] != null)
             {
-                face[2] = bb[Mathf.RoundToInt(GetBZSpace().GetBZSpace().x + Vector3.right.x), Mathf.RoundToInt(GetBZSpace().GetBZSpace().y + Vector3.right.y), Mathf.RoundToInt(GetBZSpace().GetBZSpace().z + Vector3.right.z)];
+                face[2] = bb[Mathf.RoundToInt(GetBZSpace().GetBZSpace().x + (Vector3.right.x * _multi)), Mathf.RoundToInt(GetBZSpace().GetBZSpace().y + (Vector3.right.y * _multi)), Mathf.RoundToInt(GetBZSpace().GetBZSpace().z + (Vector3.right.z * _multi))];
             }
 
             else
@@ -118,11 +126,11 @@ public class BaseBlock : MonoBehaviour
             face[2] = null;
         }
 
-        if (InRange(GetBZSpace().GetBZSpace() + Vector3.left))
+        if (InRange(GetBZSpace().GetBZSpace() + (Vector3.left * _multi)))
         {
-            if (bb[Mathf.RoundToInt(GetBZSpace().GetBZSpace().x + Vector3.left.x), Mathf.RoundToInt(GetBZSpace().GetBZSpace().y + Vector3.left.y), Mathf.RoundToInt(GetBZSpace().GetBZSpace().z + Vector3.left.z)] != null)
+            if (bb[Mathf.RoundToInt(GetBZSpace().GetBZSpace().x + (Vector3.left.x * _multi)), Mathf.RoundToInt(GetBZSpace().GetBZSpace().y + (Vector3.left.y * _multi)), Mathf.RoundToInt(GetBZSpace().GetBZSpace().z + (Vector3.left.z * _multi))] != null)
             {
-                face[3] = bb[Mathf.RoundToInt(GetBZSpace().GetBZSpace().x + Vector3.left.x), Mathf.RoundToInt(GetBZSpace().GetBZSpace().y + Vector3.left.y), Mathf.RoundToInt(GetBZSpace().GetBZSpace().z + Vector3.left.z)];
+                face[3] = bb[Mathf.RoundToInt(GetBZSpace().GetBZSpace().x + (Vector3.left.x * _multi)), Mathf.RoundToInt(GetBZSpace().GetBZSpace().y + (Vector3.left.y * _multi)), Mathf.RoundToInt(GetBZSpace().GetBZSpace().z + (Vector3.left.z * _multi))];
             }
 
             else
@@ -136,11 +144,11 @@ public class BaseBlock : MonoBehaviour
             face[3] = null;
         }
 
-        if (InRange(GetBZSpace().GetBZSpace() + Vector3.up))
+        if (InRange(GetBZSpace().GetBZSpace() + (Vector3.up * _multi)))
         {
-            if (bb[Mathf.RoundToInt(GetBZSpace().GetBZSpace().x + Vector3.up.x), Mathf.RoundToInt(GetBZSpace().GetBZSpace().y + Vector3.up.y), Mathf.RoundToInt(GetBZSpace().GetBZSpace().z + Vector3.up.z)] != null)
+            if (bb[Mathf.RoundToInt(GetBZSpace().GetBZSpace().x + (Vector3.up.x * _multi)), Mathf.RoundToInt(GetBZSpace().GetBZSpace().y + (Vector3.up.y * _multi)), Mathf.RoundToInt(GetBZSpace().GetBZSpace().z + (Vector3.up.z * _multi))] != null)
             {
-                face[4] = bb[Mathf.RoundToInt(GetBZSpace().GetBZSpace().x + Vector3.up.x), Mathf.RoundToInt(GetBZSpace().GetBZSpace().y + Vector3.up.y), Mathf.RoundToInt(GetBZSpace().GetBZSpace().z + Vector3.up.z)];
+                face[4] = bb[Mathf.RoundToInt(GetBZSpace().GetBZSpace().x + (Vector3.up.x * _multi)), Mathf.RoundToInt(GetBZSpace().GetBZSpace().y + (Vector3.up.y * _multi)), Mathf.RoundToInt(GetBZSpace().GetBZSpace().z + (Vector3.up.z * _multi))];
             }
 
             else
@@ -154,11 +162,11 @@ public class BaseBlock : MonoBehaviour
             face[4] = null;
         }
 
-        if (InRange(GetBZSpace().GetBZSpace() + Vector3.down))
+        if (InRange(GetBZSpace().GetBZSpace() + (Vector3.down * _multi)))
         {
-            if (bb[Mathf.RoundToInt(GetBZSpace().GetBZSpace().x + Vector3.down.x), Mathf.RoundToInt(GetBZSpace().GetBZSpace().y + Vector3.down.y), Mathf.RoundToInt(GetBZSpace().GetBZSpace().z + Vector3.down.z)] != null)
+            if (bb[Mathf.RoundToInt(GetBZSpace().GetBZSpace().x + (Vector3.down.x * _multi)), Mathf.RoundToInt(GetBZSpace().GetBZSpace().y + (Vector3.down.y * _multi)), Mathf.RoundToInt(GetBZSpace().GetBZSpace().z + (Vector3.down.z * _multi))] != null)
             {
-                face[5] = bb[Mathf.RoundToInt(GetBZSpace().GetBZSpace().x + Vector3.down.x), Mathf.RoundToInt(GetBZSpace().GetBZSpace().y + Vector3.down.y), Mathf.RoundToInt(GetBZSpace().GetBZSpace().z + Vector3.down.z)];
+                face[5] = bb[Mathf.RoundToInt(GetBZSpace().GetBZSpace().x + (Vector3.down.x * _multi)), Mathf.RoundToInt(GetBZSpace().GetBZSpace().y + (Vector3.down.y * _multi)), Mathf.RoundToInt(GetBZSpace().GetBZSpace().z + (Vector3.down.z * _multi))];
             }
 
             else
@@ -171,5 +179,10 @@ public class BaseBlock : MonoBehaviour
         {
             face[5] = null;
         }
+    }
+
+    public void RemoveBlock()
+    {
+        bz.RemoveBlock(this);
     }
 }

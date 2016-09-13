@@ -12,12 +12,16 @@ public class Signal : BaseBlock
     }
 
     bool isOn;
+    float buttTime;
     BlockMode bm;
+
+    public bool GetIsOn() { return isOn; }
 
     protected override void Awake()
     {
         base.Awake();
 
+        buttTime = 1.0f;
         bm = BlockMode.SWITCH;
     }
 
@@ -33,30 +37,46 @@ public class Signal : BaseBlock
         if (Input.GetKeyDown(KeyCode.Semicolon))
         {
             SetFace();
+
             isOn = isOn == false ? true : false;
 
             switch (bm)
             {
                 case BlockMode.SWITCH:
-                    for (int i = 0; i < face.Length; i++)
-                    {
-                        if (face[i] != null && face[i].GetComponent<PowerNode>() != null)
-                        {
-                            face[i].GetComponent<PowerNode>().AlterState(isOn);
-                        }
-                    }
-
                     break;
 
                 case BlockMode.BUTTON:
+                    StartCoroutine(ButtTime());
                     break;
 
                 case BlockMode.AND:
+                    /*foreach (BaseBlock f in face)
+                    {
+                        if (f != null && f.GetComponent<PowerNode>() != null)
+                        {
+                            if (f.GetComponent<PowerNode>().GetIsPowered())
+                            {
+                                powerReq++;
+                            }
+                        }
+                    }
+
+                    if (powerReq == inputFaces)
+                    {
+                        outputFaces.SetIsPowered()
+                    }*/
+
                     break;
 
                 case BlockMode.OR:
                     break;
             }
         }
+    }
+
+    IEnumerator ButtTime()
+    {
+        yield return new WaitForSeconds(buttTime);
+        isOn = isOn == false ? true : false;
     }
 }

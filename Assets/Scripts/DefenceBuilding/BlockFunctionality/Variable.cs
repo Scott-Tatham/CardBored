@@ -13,6 +13,17 @@ public class Variable : BaseBlock
         {
             transform.SetParent(_parent);
             parentCount = _parent.GetComponent<Variable>().GetParentCount() + 1;
+            transform.rotation = transform.parent.rotation;
         }
+    }
+
+    protected override void Awake()
+    {
+        base.Awake();
+    }
+
+    protected override void Start()
+    {
+        base.Start();
     }
 }

@@ -13,6 +13,11 @@ public class Bullet : MonoBehaviour
     public void SetInUse(bool _inUse) { inUse = _inUse; }
     public void SetTarget(GameObject _target) { target = _target; }
 
+    void Awake()
+    {
+        gameObject.SetActive(false);
+    }
+
     void Update()
     {
         Move();
