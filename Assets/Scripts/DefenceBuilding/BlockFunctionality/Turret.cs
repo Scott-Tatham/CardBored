@@ -23,8 +23,10 @@ public class Turret : BaseBlock
         enemies.Remove(_enemy);
     }
 
-    void Start()
+    protected override void Start()
     {
+        base.Start();
+
         bullets = new GameObject[poolSize];
         Refill();
         canDo = true;
@@ -79,15 +81,12 @@ public class Turret : BaseBlock
     bool LineOfSight(GameObject _enemy)
     {
         RaycastHit[] hits;
-        Vector3 enemyNorm = (transform.position - _enemy.transform.position).normalized;
+        Vector3 enemyNorm = (_enemy.transform.position - transform.position).normalized;
 
         hits = Physics.RaycastAll(transform.position, enemyNorm, radius);
-        Debug.DrawRay(transform.position, enemyNorm, Color.green, 1.0f);
 
-        Debug.Log(hits.Length);
         foreach (RaycastHit hit in hits)
         {
-            Debug.Log("Here");
             if (hit.transform.tag == "Enemy")
             {
                 return true;
@@ -108,7 +107,16 @@ public class Turret : BaseBlock
             currentbullet.SetActive(true);
             currentbullet.GetComponent<Bullet>().SetInUse(true);
             currentbullet.GetComponent<Bullet>().SetTarget(target);
-            index++;
+
+            if (index == bullets.Length - 1)
+            {
+                index = 0;
+            }
+
+            else
+            {
+                index++;
+            }
         }
 
         else

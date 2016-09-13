@@ -3,13 +3,15 @@ using System.Collections;
 
 public class EventTimer : MonoBehaviour
 {
-    private bool canDo;
+    bool canDo;
+    float time;
 
     public bool GetCanDo() { return canDo; }
     
     void Start()
     {
-        InvokeRepeating("ChangeState", 0.0f, 1.5f);
+        time = 1.1f;
+        InvokeRepeating("ChangeState", 0.0f, time);
     }
 
     void ChangeState()
@@ -17,11 +19,13 @@ public class EventTimer : MonoBehaviour
         if (canDo)
         {
             canDo = false;
+            time = 0.1f;
         }
 
         else
         {
             canDo = true;
+            time = 1.1f;
         }
     }
 }

@@ -81,6 +81,7 @@
     <Compile Include="Assets\Scripts\DefenceBuilding\BlockFunctionality\BaseBlock.cs" />
     <Compile Include="Assets\Scripts\DefenceBuilding\BlockFunctionality\Bullet.cs" />
     <Compile Include="Assets\Scripts\DefenceBuilding\BlockFunctionality\PowerNode.cs" />
+    <Compile Include="Assets\Scripts\DefenceBuilding\BlockFunctionality\PushPull.cs" />
     <Compile Include="Assets\Scripts\DefenceBuilding\BlockFunctionality\Rotate.cs" />
     <Compile Include="Assets\Scripts\DefenceBuilding\BlockFunctionality\Signal.cs" />
     <Compile Include="Assets\Scripts\DefenceBuilding\BlockFunctionality\Slide.cs" />
@@ -88,12 +89,8 @@
     <Compile Include="Assets\Scripts\DefenceBuilding\BlockFunctionality\Transmit.cs" />
     <Compile Include="Assets\Scripts\DefenceBuilding\BlockFunctionality\Turret.cs" />
     <Compile Include="Assets\Scripts\DefenceBuilding\BlockFunctionality\Variable.cs" />
-    <Compile Include="Assets\Scripts\DefenceBuilding\BlockUI\BaseUI.cs" />
-    <Compile Include="Assets\Scripts\DefenceBuilding\BlockUI\RotateUI.cs" />
-    <Compile Include="Assets\Scripts\DefenceBuilding\BlockUI\SlideUI.cs" />
-    <Compile Include="Assets\Scripts\DefenceBuilding\BlockUI\StaticUI.cs" />
-    <Compile Include="Assets\Scripts\DefenceBuilding\BlockUI\VariableUI.cs" />
     <Compile Include="Assets\Scripts\DefenceBuilding\BoundingBox.cs" />
+    <Compile Include="Assets\Scripts\DefenceBuilding\BoxUVs.cs" />
     <Compile Include="Assets\Scripts\DefenceBuilding\EventTimer.cs" />
     <Compile Include="Assets\Scripts\DefenceBuilding\PlaceBlock.cs" />
     <Compile Include="Assets\Scripts\DefenceBuilding\Structure.cs" />
@@ -105,6 +102,9 @@
     <Compile Include="Assets\Scripts\Player\PlayerLook.cs" />
     <Compile Include="Assets\Scripts\Player\PlayerMove.cs" />
     <Compile Include="Assets\Scripts\Player\PlayerStats.cs" />
+    <Compile Include="Assets\Scripts\UI\HotbarUI.cs" />
+    <Compile Include="Assets\Scripts\UI\RadialMenu.cs" />
+    <Compile Include="Assets\Scripts\UI\RadialSegment.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\ProBuilder\API Examples\Icosphere FFT\README.txt" />

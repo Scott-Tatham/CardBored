@@ -27,11 +27,13 @@ public class Rotate : PowerNode
                 {
                     if (face[i] != null && face[i].GetComponent<PowerNode>() == null && face[i].transform.parent == null && face[i].tag != "StaticBlock")
                     {
-                        if (face[i].GetCanStart())
+                        if (face[i].IsMaster(i) && face[i].GetCanStart())
                         {
                             turnSpeed = dir[i] == true ? turnSpeed * 1 : turnSpeed * -1;
 
                             face[i].transform.RotateAround(transform.position, (face[i].transform.position - transform.position).normalized, turnSpeed);
+
+                            // Normal?
                         }
                     }
                 }
