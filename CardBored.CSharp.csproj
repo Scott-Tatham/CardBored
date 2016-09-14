@@ -102,6 +102,7 @@
     <Compile Include="Assets\Scripts\Player\PlayerLook.cs" />
     <Compile Include="Assets\Scripts\Player\PlayerMove.cs" />
     <Compile Include="Assets\Scripts\Player\PlayerStats.cs" />
+    <Compile Include="Assets\Scripts\UI\CrossHairUI.cs" />
     <Compile Include="Assets\Scripts\UI\HotbarUI.cs" />
     <Compile Include="Assets\Scripts\UI\RadialMenu.cs" />
     <Compile Include="Assets\Scripts\UI\RadialSegment.cs" />

@@ -4,48 +4,33 @@ using System.Collections;
 public class PlayerLook : MonoBehaviour
 {
     [SerializeField]
-    private Texture2D crossHair;
+    GameObject fpCamera;
     [SerializeField]
-    private GameObject fpCamera;
-    private float centreX;
-    private float centreY;
-    private float xMouse;
-    private float yMouse;
-    private float xEul;
-    private float yEul;
-    private float zEul;
-    private Rect rect;
-    private Options opt;
-    private Transform player;
-    private Quaternion playerQ;
-    private Quaternion fpCameraQ;
+    CrossHairUI cui;
+    float xMouse;
+    float yMouse;
+    float xEul;
+    float yEul;
+    float zEul;
+    Options opt;
+    Transform player;
+    Quaternion playerQ;
+    Quaternion fpCameraQ;
 
     void Start()
     {
         opt = GameObject.FindGameObjectWithTag("GameManager").GetComponent<Options>();
-
         player = GetComponent<Transform>();
-
         playerQ = player.transform.localRotation;
         fpCameraQ = fpCamera.transform.localRotation;
-
-        MouseLock();
-
-        centreX = (Screen.width / 2) - (crossHair.width / 2);
-        centreY = (Screen.height / 2) - (crossHair.height / 2);
-
-        rect = new Rect(centreX, centreY, crossHair.width, crossHair.height);
     }
 
     void Update()
     {
-        LookRotation();
-        SetMouseLock();
-    }
-
-    void OnGUI()
-    {
-        GUI.DrawTexture(rect, crossHair);
+        if (!cui.GetFreeze())
+        {
+            LookRotation();
+        }
     }
 
     public void LookRotation()
@@ -74,25 +59,5 @@ public class PlayerLook : MonoBehaviour
 
         player.localRotation = playerQ;
         fpCamera.transform.localRotation = fpCameraQ;
-    }
-
-    public void MouseLock()
-    {
-        Cursor.lockState = CursorLockMode.Locked;
-        Cursor.visible = false;
-    }
-
-    public void SetMouseLock()
-    {
-        if (Input.GetKeyUp(KeyCode.Escape))
-        {
-            Cursor.lockState = CursorLockMode.None;
-            Cursor.visible = true;
-        }
-
-        if (Input.GetMouseButtonDown(0))
-        {
-            MouseLock();
-        }
     }
 }
