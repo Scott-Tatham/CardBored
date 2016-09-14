@@ -11,7 +11,6 @@ public class BaseBlock : MonoBehaviour
     protected BZSpace bzSpace;
     protected BoundingBox bz;
     protected EventTimer et;
-    protected Material mat;
     
     public bool GetCanStart() { return canStart; }
     public int GetPriority() { return priority; }
@@ -24,13 +23,10 @@ public class BaseBlock : MonoBehaviour
     protected virtual void Awake()
     {
         et = GameObject.FindGameObjectWithTag("GameManager").GetComponent<EventTimer>();
-        mat = gameObject.GetComponent<Material>();
     }
 
     protected virtual void Start()
     {
-        mat.SetTextureScale("Tiling", new Vector2(0.5f, 0.5f));
-
         canStart = false;
         priority = 7;
     }

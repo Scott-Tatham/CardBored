@@ -17,4 +17,24 @@ public class RadialSegment : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
         isOn = false;
         Debug.Log("Off");
     }
+
+    void Update()
+    {
+
+    }
+
+    void Over()
+    {
+        if (EventSystem.current.IsPointerOverGameObject())
+        {
+            isOn = true;
+            Debug.Log("Over");
+        }
+
+        else
+        {
+            isOn = false;
+            Debug.Log("Off");
+        }
+    }
 }

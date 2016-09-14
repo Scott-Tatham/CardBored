@@ -26,13 +26,15 @@ public class RadialMenu : MonoBehaviour
                 if (hit.transform.GetComponent<BaseBlock>() != null)
                 {
                     Rad.gameObject.SetActive(true);
+                    CrossHairUI.MouseUnlock();
                 }
             }
         }
 
-        if (Input.GetMouseButtonUp(1))
+        if (Input.GetKeyUp(KeyCode.Tab) || Input.GetMouseButtonUp(1))
         {
             Rad.gameObject.SetActive(false);
+            CrossHairUI.MouseLock();
         }
     }
 }
