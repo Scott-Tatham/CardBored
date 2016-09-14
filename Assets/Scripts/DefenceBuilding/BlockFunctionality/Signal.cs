@@ -25,6 +25,14 @@ public class Signal : BaseBlock
         bm = BlockMode.SWITCH;
     }
 
+    protected override void Start()
+    {
+        for (int i = 0; i < 6; i++)
+        {
+            GetComponent<BoxUVs>().SetSide(i, BoxUVs.Side.SIGNAL);
+        }
+    }
+
     protected override void Update()
     {
         base.Update();

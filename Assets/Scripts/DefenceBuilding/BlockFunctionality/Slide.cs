@@ -18,6 +18,22 @@ public class Slide : PowerNode
     Vector3[] target = new Vector3[6];
     Direction[] dir = new Direction[6] { Direction.RIGHT, Direction.LEFT, Direction.BACK, Direction.FORWARD, Direction.RIGHT, Direction.LEFT };
 
+    protected override void Start()
+    {
+        for (int i = 0; i < 6; i++)
+        {
+            if (i == 3)
+            {
+                GetComponent<BoxUVs>().SetSide(i, BoxUVs.Side.SLIDER);
+            }
+
+            else
+            {
+                GetComponent<BoxUVs>().SetSide(i, BoxUVs.Side.SLIDEL);
+            }
+        }
+    }
+
     protected override void Update()
     {
         base.Update();

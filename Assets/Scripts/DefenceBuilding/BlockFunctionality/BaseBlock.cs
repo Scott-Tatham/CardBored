@@ -29,6 +29,11 @@ public class BaseBlock : MonoBehaviour
     {
         canStart = false;
         priority = 7;
+
+        for (int i = 0; i < 6; i++)
+        {
+            GetComponent<BoxUVs>().SetSide(i, BoxUVs.Side.EMPTY);
+        }
     }
 
     protected virtual void Update()
