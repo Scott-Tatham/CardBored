@@ -25,5 +25,12 @@ public class Variable : BaseBlock
     protected override void Start()
     {
         base.Start();
+
+        GetComponent<BoxUVs>().SetSide(0, BoxUVs.Side.EMPTY);
+        GetComponent<BoxUVs>().SetSide(1, BoxUVs.Side.TAPE);
+        GetComponent<BoxUVs>().SetSide(2, BoxUVs.Side.EMPTY);
+        GetComponent<BoxUVs>().SetSide(3, BoxUVs.Side.EMPTY);
+        GetComponent<BoxUVs>().SetSide(4, BoxUVs.Side.LETTUCEL);
+        GetComponent<BoxUVs>().SetSide(5, BoxUVs.Side.LETTUCER);
     }
 }

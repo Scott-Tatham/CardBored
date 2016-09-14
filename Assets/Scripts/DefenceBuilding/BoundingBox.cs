@@ -4,13 +4,13 @@ using System.Collections;
 public class BoundingBox : MonoBehaviour
 {
     [SerializeField]
-    private Vector3 bounds;
+    Vector3 bounds;
     [SerializeField]
-    private GameObject boundUI;
+    GameObject boundUI;
     [SerializeField]
-    private GameObject baseBlock;
-    private GameObject buildingPlatform;
-    private BaseBlock[,,] blocks;
+    GameObject baseBlock;
+    GameObject buildingPlatform;
+    BaseBlock[,,] blocks;
 
     public Vector3 GetBounds() { return bounds; }
     public BaseBlock[,,] GetBlocks() { return blocks; }
@@ -29,6 +29,7 @@ public class BoundingBox : MonoBehaviour
             for (int z = 0; z < bounds.z; z++)
             {
                 GameObject BaseBlock = Instantiate(baseBlock, new Vector3(transform.position.x + x, transform.position.y, transform.position.z + z), Quaternion.identity) as GameObject;
+                BaseBlock.hideFlags = HideFlags.HideInHierarchy;
             }
         }
 

@@ -7,6 +7,22 @@ public class Rotate : PowerNode
     float turnSpeed;
     bool[] dir = new bool[6] { true, true, true, true, true, true };
 
+    protected override void Start()
+    {
+        for (int i = 0; i < 6; i++)
+        {
+            if (i == 1 || i == 3)
+            {
+                GetComponent<BoxUVs>().SetSide(i, BoxUVs.Side.ROTANTCLOCKL);
+            }
+
+            else
+            {
+                GetComponent<BoxUVs>().SetSide(i, BoxUVs.Side.ROTANTCLOCKU);
+            }
+        }
+    }
+
     protected override void Update()
     {
         base.Update();
@@ -19,8 +35,7 @@ public class Rotate : PowerNode
         if (et.GetCanDo())
         {
             SetFace();
-
-
+            
             for (int i = 0; i < face.Length; i++)
             {
                 if (isActive[i] && isPowered)
