@@ -3,6 +3,8 @@ using System.Collections;
 
 public class BaseBlock : MonoBehaviour
 {
+    [SerializeField]
+    protected float health;
     protected bool canStart;
     protected int priority;
     protected bool[] isActive = new bool[6] { true, true, true, true, true, true };
@@ -41,6 +43,14 @@ public class BaseBlock : MonoBehaviour
         if (!et.GetCanDo())
         {
             canStart = true;
+        }
+    }
+
+    void CheckHealth()
+    {
+        if (health <= 0)
+        {
+            RemoveBlock();
         }
     }
 

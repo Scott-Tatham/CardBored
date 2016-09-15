@@ -3,85 +3,63 @@ using System.Collections;
 
 public class PowerNode : BaseBlock
 {
-    bool canCheck;
     protected bool isPowered;
-    BaseBlock source;
-    BaseBlock sourceChild;
 
     public bool GetIsPowered() { return isPowered; }
-    public BaseBlock GetSource() { return source; }
-
-    public void SetSourceChild()
-    {
-        //if (sourceChild != null)
-        {
-            //sourceChild.GetComponent<Transmit>().SetSourceChild();
-        }
-
-        source = null;
-        sourceChild = null;
-    }
 
     protected override void Start()
     {
         base.Start();
 
-        canCheck = true;
+        SetFace();
+        CheckState();
     }
 
-    protected override void Update()
+    void CheckState()
     {
-        base.Update();
-
-        if (!et.GetCanDo() && canCheck)
+        for (int i = 0; i < face.Length; i++)
         {
-            if (source == null || (source.GetComponent<Signal>() != null && !source.GetComponent<Signal>().GetIsOn()))
+            if (face[i] != null && face[i].GetComponent<PowerNode>() != null)
             {
-                if (sourceChild != null)
+                if (face[i].GetComponent<PowerNode>().GetIsPowered())
                 {
-                    sourceChild.GetComponent<Transmit>().SetSourceChild();
-                }
+                    isPowered = true;
 
-                source = null;
-                sourceChild = null;
-                isPowered = false;
-                State();
+                    break;
+                }
             }
         }
-
-        if (et.GetCanDo() && !canCheck)
-        {
-            canCheck = true;
-        }
     }
 
-    public void State()
+    public void StateOn()
     {
-        SetFace();
+        isPowered = true;
 
         for (int i = 0; i < face.Length; i++)
         {
-            if (face[i] != null)
+            if (face[i] != null && face[i].GetComponent<PowerNode>() != null && !face[i].GetComponent<PowerNode>().GetIsPowered())
             {
-                if (face[i].GetComponent<Transmit>() != null && face[i].GetComponent<Transmit>().GetIsPowered())
-                {
-                    source = face[i].GetComponent<Transmit>().GetSource();
-                    sourceChild = face[i];
-                    isPowered = true;
-
-                    break;
-                }
-
-                else if (face[i].GetComponent<Signal>() != null && face[i].GetComponent<Signal>().GetIsOn())
-                {
-                    source = face[i];
-                    isPowered = true;
-
-                    break;
-                }
+                face[i].GetComponent<PowerNode>().StateOn();
             }
         }
+    }
 
-        canCheck = false;
+    public void StateOff()
+    {
+        isPowered = false;
+
+        for (int i = 0; i < face.Length; i++)
+        {
+            if(face[i] != null && face[i].GetComponent<PowerNode>() != null && face[i].GetComponent<PowerNode>().GetIsPowered())
+            {
+                face[i].GetComponent<PowerNode>().StateOff();
+            }
+        }
+    }
+
+    public void UpdateFace()
+    {
+        SetFace();
+        CheckState();
     }
 }
