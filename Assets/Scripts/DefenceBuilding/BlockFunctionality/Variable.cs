@@ -31,6 +31,6 @@ public class Variable : BaseBlock
         GetComponent<BoxUVs>().SetSide(2, BoxUVs.Side.EMPTY);
         GetComponent<BoxUVs>().SetSide(3, BoxUVs.Side.EMPTY);
         GetComponent<BoxUVs>().SetSide(4, BoxUVs.Side.LETTUCEL);
-        GetComponent<BoxUVs>().SetSide(5, BoxUVs.Side.LETTUCER);
+        GetComponent<BoxUVs>().SetSide(5, BoxUVs.Side.LETTUCEL);
     }
 }

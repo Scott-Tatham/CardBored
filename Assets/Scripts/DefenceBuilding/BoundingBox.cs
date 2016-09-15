@@ -34,7 +34,7 @@ public class BoundingBox : MonoBehaviour
         }
 
         GameObject BuildZoneUI = Instantiate(boundUI, new Vector3((bounds.x / 2) - 0.5f + transform.position.x, (transform.position.y + bounds.y / 2) + 0.01f, (bounds.z / 2) - 0.5f + transform.position.z), Quaternion.identity) as GameObject;
-        BuildZoneUI.transform.localScale = bounds;
+        BuildZoneUI.transform.localScale = new Vector3 (bounds.x + 0.01f, bounds.y, bounds.z + 0.01f);
     }
 
     // May possibly become the mega checker.
