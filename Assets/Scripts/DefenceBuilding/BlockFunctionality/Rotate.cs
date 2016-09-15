@@ -50,7 +50,7 @@ public class Rotate : PowerNode
         {
             if (isActive[i] && isPowered)
             {
-                if (face[i] != null && face[i].GetComponent<PowerNode>() == null && face[i].transform.parent == null && face[i].tag != "StaticBlock")
+                if (face[i] != null && face[i].GetComponent<PowerNode>() == null && face[i].transform.parent == null && face[i].GetComponent<Static>() == null)
                 {
                     if (face[i].IsMaster(i) && face[i].GetCanStart())
                     {
