@@ -56,6 +56,7 @@ public class BoundingBox : MonoBehaviour
     public void RemoveBlock(BaseBlock _bb)
     {
         blocks[Mathf.RoundToInt(_bb.GetBZSpace().GetBZSpace().x), Mathf.RoundToInt(_bb.GetBZSpace().GetBZSpace().y), Mathf.RoundToInt(_bb.GetBZSpace().GetBZSpace().z)] = null;
+        Destroy(_bb.gameObject);
     }
 
     public void MoveBlock(BaseBlock _bb, Vector3 _dir)

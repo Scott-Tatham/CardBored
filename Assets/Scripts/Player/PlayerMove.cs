@@ -16,10 +16,10 @@ public class PlayerMove : MonoBehaviour
 
     void Update()
     {
-        move();
+        Move();
     }
 
-    public void move()
+    public void Move()
     {
         GetComponent<Rigidbody>().AddForce(new Vector3(0, (em.GetGravity() * GetComponent<Rigidbody>().mass), 0), ForceMode.Acceleration);
 

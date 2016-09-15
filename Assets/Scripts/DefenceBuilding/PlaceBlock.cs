@@ -109,7 +109,7 @@ public class PlaceBlock : MonoBehaviour
             ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             Physics.Raycast(ray, out hit);
 
-            if (Vector3.Distance(hit.point, transform.position) < 4.0f)
+            if (Vector3.Distance(hit.point, transform.position) < 5.0f)
             {
                 Vector3 placePos;
                 if (hit.transform.tag != "BuildZone")
@@ -180,12 +180,11 @@ public class PlaceBlock : MonoBehaviour
             ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             Physics.Raycast(ray, out hit);
 
-            if (Vector3.Distance(hit.point, transform.position) < 4.0f)
+            if (Vector3.Distance(hit.point, transform.position) < 5.0f)
             {
                 if (hit.transform.GetComponent<BaseBlock>() != null)
                 {
                     hit.transform.GetComponent<BaseBlock>().RemoveBlock();
-                    Destroy(hit.transform.gameObject);
                 }
             }
         }

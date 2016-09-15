@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class Signal : BaseBlock
+public class Signal : Static
 {
     public enum BlockMode
     {
@@ -17,20 +17,15 @@ public class Signal : BaseBlock
 
     public bool GetIsOn() { return isOn; }
 
-    protected override void Awake()
-    {
-        base.Awake();
-
-        buttTime = 1.0f;
-        bm = BlockMode.SWITCH;
-    }
-
     protected override void Start()
     {
         for (int i = 0; i < 6; i++)
         {
             GetComponent<BoxUVs>().SetSide(i, BoxUVs.Side.SIGNAL);
         }
+        
+        buttTime = 1.0f;
+        bm = BlockMode.SWITCH;
     }
 
     protected override void Update()
@@ -51,10 +46,33 @@ public class Signal : BaseBlock
             switch (bm)
             {
                 case BlockMode.SWITCH:
-                    break;
+                    if (isOn)
+                    {
+                        for (int i = 0; i < face.Length; i++)
+                        {
+                            if (face[i] != null && face[i].GetComponent<PowerNode>() != null && !face[i].GetComponent<PowerNode>().GetIsPowered())
+                            {
+                                face[i].GetComponent<PowerNode>().StateOn();
+                            }
+                        }
+                    }
+
+                    if (!isOn)
+                    {
+                        for (int i = 0; i < face.Length; i++)
+                        {
+                            if (face[i] != null && face[i].GetComponent<PowerNode>() != null && face[i].GetComponent<PowerNode>().GetIsPowered())
+                            {
+                                face[i].GetComponent<PowerNode>().StateOff();
+                            }
+                        }
+                    }
+
+                            break;
 
                 case BlockMode.BUTTON:
                     StartCoroutine(ButtTime());
+
                     break;
 
                 case BlockMode.AND:
@@ -77,6 +95,7 @@ public class Signal : BaseBlock
                     break;
 
                 case BlockMode.OR:
+
                     break;
             }
         }
