@@ -20,6 +20,7 @@ public class PushPull : PowerNode
     protected override void Update()
     {
         base.Update();
+        CheckHealth();
 
         if (et.GetCanDo())
         {

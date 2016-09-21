@@ -50,7 +50,7 @@ public class BaseBlock : MonoBehaviour
         }
     }
 
-    void CheckHealth()
+    protected void CheckHealth()
     {
         if (health <= 0)
         {
@@ -198,7 +198,7 @@ public class BaseBlock : MonoBehaviour
 
     public void RemoveBlock()
     {
-        bz.RemoveBlock(this);
+        bz.RemoveBlock(gameObject.GetComponent<BaseBlock>());
         Destroy(gameObject);
     }
 }

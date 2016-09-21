@@ -78,6 +78,7 @@
     <Compile Include="Assets\Scripts\Boxes\BoxHealth.cs" />
     <Compile Include="Assets\Scripts\DefenceBuilding\BZSpace.cs" />
     <Compile Include="Assets\Scripts\DefenceBuilding\BlockFunctionality\BaseBlock.cs" />
+    <Compile Include="Assets\Scripts\DefenceBuilding\BlockFunctionality\BossBlock.cs" />
     <Compile Include="Assets\Scripts\DefenceBuilding\BlockFunctionality\Bullet.cs" />
     <Compile Include="Assets\Scripts\DefenceBuilding\BlockFunctionality\PowerNode.cs" />
     <Compile Include="Assets\Scripts\DefenceBuilding\BlockFunctionality\PushPull.cs" />
