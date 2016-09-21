@@ -46,7 +46,7 @@ public class PlayerMove : MonoBehaviour
 
     void OnCollisionEnter(Collision _col)
     {
-        if (_col.transform.tag == "Environment" || _col.transform.tag == "Base" || _col.transform.tag == "Block")
+        if (_col.transform.tag == "Environment" || _col.transform.tag == "Block")
         {
             GetComponent<PlayerStats>().SetAppSurface(true);
         }

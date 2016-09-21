@@ -13,11 +13,13 @@ public class BaseBlock : MonoBehaviour
     protected BZSpace bzSpace;
     protected BoundingBox bz;
     protected EventTimer et;
-    
+
+    public float GetHealth() { return health; }
     public bool GetCanStart() { return canStart; }
     public int GetPriority() { return priority; }
     public BZSpace GetBZSpace() { return bzSpace; }
     
+    public void SetHealth(float _health) { health = _health; }
     public void SetCanStart(bool _canStart) { canStart = _canStart; }
     public void SetPriority(int _priority) { priority = _priority; }
     public void SetBZSpace(int _x, int _y, int _z) { bzSpace = new BZSpace(_x, _y, _z); }
@@ -40,6 +42,8 @@ public class BaseBlock : MonoBehaviour
 
     protected virtual void Update()
     {
+        CheckHealth();
+
         if (!et.GetCanDo())
         {
             canStart = true;
@@ -195,5 +199,6 @@ public class BaseBlock : MonoBehaviour
     public void RemoveBlock()
     {
         bz.RemoveBlock(this);
+        Destroy(gameObject);
     }
 }

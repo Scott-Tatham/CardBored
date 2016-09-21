@@ -10,13 +10,7 @@ public class Box : MonoBehaviour {
 	{
 		col = GetComponent<Collider>();
 		prevBounds = col.bounds;
-
-        if (AstarPath.active != null)
-        {
-            GraphUpdateObject guo = new GraphUpdateObject(prevBounds);
-            AstarPath.active.UpdateGraphs(guo);
-        }
-    }
+	}
 	 
 	void Update () 
 	{

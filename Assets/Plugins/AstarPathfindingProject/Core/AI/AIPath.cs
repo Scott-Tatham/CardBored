@@ -60,8 +60,6 @@ public class AIPath : MonoBehaviour {
 	 * \see #canSearch */
 	public bool canMove = true;
 
-    public bool canCheck = true;
-
 	/** Maximum velocity.
 	 * This is the maximum speed in world units per second.
 	 */
@@ -331,11 +329,6 @@ public class AIPath : MonoBehaviour {
 			CheckBoxes ();
 		}
 
-        if(canCheck)
-        {
-            StartCoroutine("CheckWait");
-        }
-
 		//Rotate towards targetDirection (filled in by CalculateVelocity)
 		RotateTowards(targetDirection);
 
@@ -369,14 +362,6 @@ public class AIPath : MonoBehaviour {
         {
             target = GameObject.FindGameObjectWithTag("Player").transform;
         }
-    }
-
-    public IEnumerator CheckWait()
-    {
-        canCheck = false;
-        CheckBoxes();
-        yield return new WaitForSeconds(2);
-        canCheck = true;
     }
 
 	/** Point to where the AI is heading.

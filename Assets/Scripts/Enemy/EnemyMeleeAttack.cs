@@ -35,7 +35,7 @@ public class EnemyMeleeAttack : MonoBehaviour
     public IEnumerator EnemyAttack()
     {
         canAttack = false;
-		target.GetComponent<BoxHealth> ().currentHealth -= meleeDamage;
+        target.GetComponent<BaseBlock>().SetHealth(target.GetComponent<BaseBlock>().GetHealth() - meleeDamage);
         yield return new WaitForSeconds(attackSpeed);
 		canAttack = true;
 
