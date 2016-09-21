@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class PowerNode : BaseBlock
+public class PowerNode : Static
 {
     protected bool isPowered;
 

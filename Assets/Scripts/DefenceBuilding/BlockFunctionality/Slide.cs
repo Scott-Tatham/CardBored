@@ -12,7 +12,8 @@ public class Slide : PowerNode
         UP,
         DOWN
     }
-    
+
+    bool first;
     bool[] init = new bool[6] { true, true, true, true, true, true };
     bool[] newRun = new bool[6] { true, true, true, true, true, true };
     Vector3[] target = new Vector3[6];
@@ -38,7 +39,12 @@ public class Slide : PowerNode
     {
         base.Update();
 
-        if (et.GetCanDo())
+        if (!et.GetCanDo() && !first)
+        {
+            first = true;
+        }
+
+        if (et.GetCanDo() && first)
         {
             SlideF();
         }
@@ -52,7 +58,7 @@ public class Slide : PowerNode
         {
             if (isActive[i] && isPowered)
             {
-                if (face[i] != null && face[i].GetComponent<PowerNode>() == null && face[i].transform.parent == null && face[i].GetComponent<Static>() == null)
+                if (face[i].transform.parent == null && face[i].GetComponent<Static>() == null)
                 {
                     if (face[i].IsMaster(i) && face[i].GetCanStart())
                     {
@@ -68,26 +74,32 @@ public class Slide : PowerNode
                             {
                                 case Direction.FORWARD:
                                     target[i] = face[i].transform.position + Vector3.forward;
+                                    
                                     break;
 
                                 case Direction.BACK:
                                     target[i] = face[i].transform.position + Vector3.back;
+
                                     break;
 
                                 case Direction.RIGHT:
                                     target[i] = face[i].transform.position + Vector3.right;
+
                                     break;
 
                                 case Direction.LEFT:
                                     target[i] = face[i].transform.position + Vector3.left;
+
                                     break;
 
                                 case Direction.UP:
                                     target[i] = face[i].transform.position + Vector3.up;
+
                                     break;
 
                                 case Direction.DOWN:
                                     target[i] = face[i].transform.position + Vector3.down;
+
                                     break;
                             }
 

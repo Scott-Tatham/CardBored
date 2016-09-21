@@ -165,7 +165,7 @@ public class PlaceBlock : MonoBehaviour
                             block.GetComponent<BaseBlock>().SetBounds(go.GetComponent<BoundingBox>());
                             go.GetComponent<BoundingBox>().AddBlock(block.GetComponent<BaseBlock>());
 
-                            if (block.tag == "VariableBlock" && hit.transform.tag == "VariableBlock")
+                            if (block.GetComponent<Variable>() != null && hit.transform.GetComponent<Variable>() != null)
                             {
                                 block.GetComponent<Variable>().SetParent(hit.transform);
                             }

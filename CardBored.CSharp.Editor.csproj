@@ -86,20 +86,11 @@
     <Reference Include="SyntaxTree.VisualStudio.Unity.Bridge">
       <HintPath>Library\UnityAssemblies\SyntaxTree.VisualStudio.Unity.Bridge.dll</HintPath>
     </Reference>
-    <Reference Include="ProBuilderCore-Unity5">
-      <HintPath>Assets\ProBuilder\Classes\ProBuilderCore-Unity5.dll</HintPath>
+    <Reference Include="Pathfinding.JsonFx">
+      <HintPath>Assets\Plugins\AstarPathfindingProject\Plugins\JsonFx\Pathfinding.JsonFx.dll</HintPath>
     </Reference>
-    <Reference Include="ProBuilderMeshOps-Unity5">
-      <HintPath>Assets\ProBuilder\Classes\ProBuilderMeshOps-Unity5.dll</HintPath>
-    </Reference>
-    <Reference Include="KDTree">
-      <HintPath>Assets\ProBuilder\Classes\ClassesLib\KDTree.dll</HintPath>
-    </Reference>
-    <Reference Include="Triangle">
-      <HintPath>Assets\ProBuilder\Classes\ClassesLib\Triangle.dll</HintPath>
-    </Reference>
-    <Reference Include="ProBuilderEditor-Unity5">
-      <HintPath>Assets\ProBuilder\Editor\ProBuilderEditor-Unity5.dll</HintPath>
+    <Reference Include="Pathfinding.Ionic.Zip.Reduced">
+      <HintPath>Assets\Plugins\AstarPathfindingProject\Plugins\DotNetZip\Pathfinding.Ionic.Zip.Reduced.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -117,6 +108,23 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\AstarPathfindingEditor\Editor\AStarAI.cs" />
+    <Compile Include="Assets\AstarPathfindingEditor\Editor\AnimationLinkEditor.cs" />
+    <Compile Include="Assets\AstarPathfindingEditor\Editor\AstarPathEditor.cs" />
+    <Compile Include="Assets\AstarPathfindingEditor\Editor\AstarUpdateChecker.cs" />
+    <Compile Include="Assets\AstarPathfindingEditor\Editor\AstarUpdateWindow.cs" />
+    <Compile Include="Assets\AstarPathfindingEditor\Editor\CustomGraphEditorAttribute.cs" />
+    <Compile Include="Assets\AstarPathfindingEditor\Editor\EditorGUIx.cs" />
+    <Compile Include="Assets\AstarPathfindingEditor\Editor\EditorUtilities.cs" />
+    <Compile Include="Assets\AstarPathfindingEditor\Editor\GraphEditors\GraphEditor.cs" />
+    <Compile Include="Assets\AstarPathfindingEditor\Editor\GraphEditors\GridGeneratorEditor.cs" />
+    <Compile Include="Assets\AstarPathfindingEditor\Editor\GraphEditors\NavMeshGeneratorEditor.cs" />
+    <Compile Include="Assets\AstarPathfindingEditor\Editor\GraphEditors\PointGeneratorEditor.cs" />
+    <Compile Include="Assets\AstarPathfindingEditor\Editor\GraphUpdateSceneEditor.cs" />
+    <Compile Include="Assets\AstarPathfindingEditor\Editor\Misc\AstarEnumFlagDrawer.cs" />
+    <Compile Include="Assets\AstarPathfindingEditor\Editor\ModifierEditors\RaycastModifierEditor.cs" />
+    <Compile Include="Assets\AstarPathfindingEditor\Editor\ModifierEditors\SmoothModifierEditor.cs" />
+    <Compile Include="Assets\AstarPathfindingEditor\Editor\SeekerEditor.cs" />
     <Compile Include="Assets\Editor\ImageEffects\AntialiasingEditor.cs" />
     <Compile Include="Assets\Editor\ImageEffects\BloomAndFlaresEditor.cs" />
     <Compile Include="Assets\Editor\ImageEffects\BloomEditor.cs" />
@@ -131,44 +139,8 @@
     <Compile Include="Assets\Editor\ImageEffects\SunShaftsEditor.cs" />
     <Compile Include="Assets\Editor\ImageEffects\TonemappingEditor.cs" />
     <Compile Include="Assets\Editor\ImageEffects\VignetteAndChromaticAberrationEditor.cs" />
-    <Compile Include="Assets\ProBuilder\About\Editor\pb_AboutWindow.cs" />
-    <Compile Include="Assets\ProBuilder\Editor\MenuItems\Actions\pb_GenerateUV2.cs" />
-    <Compile Include="Assets\ProBuilder\Editor\MenuItems\Geometry\pb_DetachDeleteFace.cs" />
-    <Compile Include="Assets\ProBuilder\Editor\MenuItems\Geometry\pb_ExtrudeElement.cs" />
-    <Compile Include="Assets\ProBuilder\Editor\MenuItems\Geometry\pb_FlipEdge.cs" />
-    <Compile Include="Assets\ProBuilder\Editor\MenuItems\Geometry\pb_FlipNormals.cs" />
-    <Compile Include="Assets\ProBuilder\Editor\MenuItems\Geometry\pb_SetPivot.cs" />
-    <Compile Include="Assets\ProBuilder\Editor\MenuItems\Repair\pb_CleanLeakedMeshes.cs" />
-    <Compile Include="Assets\ProBuilder\Editor\MenuItems\Repair\pb_ForceSceneRefresh.cs" />
-    <Compile Include="Assets\ProBuilder\Editor\MenuItems\Repair\pb_RemoveDegenerateTris.cs" />
-    <Compile Include="Assets\ProBuilder\Editor\MenuItems\Repair\pb_RepairColors.cs" />
-    <Compile Include="Assets\ProBuilder\Editor\MenuItems\Repair\pb_RepairMeshReferences.cs" />
-    <Compile Include="Assets\ProBuilder\Editor\MenuItems\Repair\pb_RepairUV.cs" />
-    <Compile Include="Assets\ProBuilder\Editor\MenuItems\Repair\pb_ResetEntityMaterials.cs" />
-    <Compile Include="Assets\ProBuilder\Editor\MenuItems\Selection\pb_EdgeSelection.cs" />
-    <Compile Include="Assets\ProBuilder\Editor\MenuItems\Selection\pb_ExpandSelection.cs" />
-    <Compile Include="Assets\ProBuilder\Editor\MenuItems\Selection\pb_InvertSelection.cs" />
-    <Compile Include="Assets\ProBuilder\Editor\MenuItems\Selection\pb_MaterialSelection.cs" />
-    <Compile Include="Assets\ProBuilder\Editor\pb_MenuItems.cs" />
-    <Compile Include="Assets\ProBuilder\Editor\pb_MissingScriptEditor.cs" />
-    <Compile Include="Assets\ProBuilder\Editor\pb_Preferences.cs" />
-    <Compile Include="Assets\ProBuilder\Editor\pb_ScenePostProcessor.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Assets\ProBuilder\API Examples\Icosphere FFT\README.txt" />
-    <None Include="Assets\ProBuilder\About\Credits.txt" />
-    <None Include="Assets\ProBuilder\About\changelog.txt" />
-    <None Include="Assets\ProBuilder\About\pc_AboutEntry_ProBuilder.txt" />
-    <None Include="Assets\ProBuilder\Shader\DiffuseTextureBlend.shader" />
-    <None Include="Assets\ProBuilder\Shader\DiffuseVertexColor.shader" />
-    <None Include="Assets\ProBuilder\Shader\UnlitSolidColor.shader" />
-    <None Include="Assets\ProBuilder\Shader\pb_FaceHighlight.shader" />
-    <None Include="Assets\ProBuilder\Shader\pb_HideVertices.shader" />
-    <None Include="Assets\ProBuilder\Shader\pb_StandardVertexColor.shader" />
-    <None Include="Assets\ProBuilder\Shader\pb_TransparentOverlay.shader" />
-    <None Include="Assets\ProBuilder\Shader\pb_UnlitVertexColor.shader" />
-    <None Include="Assets\ProBuilder\Shader\pb_VertexShader.shader" />
-    <None Include="Assets\ProBuilder\readme.txt" />
     <None Include="Assets\Shaders\DoubleSide.shader" />
     <None Include="Assets\Standard Assets\Effects\AmbientOcclusion\Resources\AmbientOcclusion.cginc" />
     <None Include="Assets\Standard Assets\Effects\AmbientOcclusion\Resources\AmbientOcclusion.shader" />

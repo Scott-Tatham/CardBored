@@ -50,14 +50,14 @@ public class Rotate : PowerNode
         {
             if (isActive[i] && isPowered)
             {
-                if (face[i] != null && face[i].GetComponent<PowerNode>() == null && face[i].transform.parent == null)
+                if (face[i].transform.parent == null && face[i] != null && face[i].GetComponent<Static>() == null)
                 {
                     if (face[i].IsMaster(i) && face[i].GetCanStart())
                     {
                         turnDir = dir[i] == true ? turnDir * 1 : turnDir * -1;
 
                         face[i].transform.RotateAround(transform.position, (face[i].transform.position - transform.position).normalized, turnSpeed * turnDir);
-                        if (face[i].transform.rotation.eulerAngles == Vector3.forward || face[i].transform.rotation.eulerAngles == Vector3.back || face[i].transform.rotation.eulerAngles == Vector3.right || face[i].transform.rotation.eulerAngles == Vector3.left || face[i].transform.rotation.eulerAngles == Vector3.up || face[i].transform.rotation.eulerAngles == Vector3.down)
+                        if (face[i].transform.rotation.eulerAngles == Vector3.zero)
                         {
                             Debug.Log("Yeah");
                             canRot = false;
