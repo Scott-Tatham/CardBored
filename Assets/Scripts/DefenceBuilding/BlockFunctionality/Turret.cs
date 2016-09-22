@@ -2,7 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 
-public class Turret : BaseBlock
+public class Turret : Variable
 {
     [SerializeField]
     int poolSize;
@@ -26,6 +26,11 @@ public class Turret : BaseBlock
     protected override void Start()
     {
         base.Start();
+
+        for (int i = 0; i < 6; i++)
+        {
+            GetComponent<BoxUVs>().SetSide(i, BoxUVs.Side.TURU);
+        }
 
         bullets = new GameObject[poolSize];
         Refill();

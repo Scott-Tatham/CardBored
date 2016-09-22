@@ -26,7 +26,7 @@ public class PlayerMove : MonoBehaviour
         xComp = Input.GetAxis("Horizontal");
         zComp = Input.GetAxis("Vertical");
 
-        GetComponent<PlayerStats>().SetDirectionalVelocity(new Vector3(xComp, 0, zComp));
+        GetComponent<PlayerStats>().SetDirectionalVelocity(new Vector3(xComp, 0, zComp).normalized);
         GetComponent<PlayerStats>().SetDirectionalVelocity(transform.TransformDirection(GetComponent<PlayerStats>().GetDirectionalVelocity()));
 
         GetComponent<Rigidbody>().AddForce(GetComponent<PlayerStats>().GetDirectionalVelocity() * GetComponent<PlayerStats>().GetMoveSpeed(), ForceMode.Impulse);
@@ -46,7 +46,7 @@ public class PlayerMove : MonoBehaviour
 
     void OnCollisionEnter(Collision _col)
     {
-        if (_col.transform.tag == "Environment" || _col.transform.tag == "Base" || _col.transform.tag == "Block")
+        if (_col.transform.tag == "Environment" || _col.transform.tag == "Block")
         {
             GetComponent<PlayerStats>().SetAppSurface(true);
         }

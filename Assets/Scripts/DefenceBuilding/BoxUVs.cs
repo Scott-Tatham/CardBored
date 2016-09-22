@@ -22,7 +22,11 @@ public class BoxUVs : MonoBehaviour
         SLIDEU,
         SLIDEL,
         SLIDED,
-        SIGNAL
+        SIGNAL,
+        TURD,
+        TURL,
+        TURR,
+        TURU
     }
     
     Mesh m;
@@ -40,7 +44,7 @@ public class BoxUVs : MonoBehaviour
             sides[i] = Side.EMPTY;
         }
 
-        tPoints = new Vector2[72]
+        tPoints = new Vector2[88]
         {
             // Empty
             new Vector2(0.0f, 0.0f),        // v0
@@ -148,7 +152,31 @@ public class BoxUVs : MonoBehaviour
             new Vector2(0.0f, 0.75f),       // v68
             new Vector2(0.125f, 0.75f),     // v69
             new Vector2(0.0f, 0.875f),      // v70
-            new Vector2(0.125f, 0.875f)     // v71
+            new Vector2(0.125f, 0.875f),    // v71
+
+            // Turret Down
+            new Vector2(0.5f, 0.5f),        // v72
+            new Vector2(0.625f, 0.5f),      // v73
+            new Vector2(0.5f, 0.625f),      // v74
+            new Vector2(0.625f, 0.625f),    // v75
+
+            // Turret Left
+            new Vector2(0.625f, 0.5f),      // v76
+            new Vector2(0.75f, 0.5f),       // v77
+            new Vector2(0.625f, 0.625f),    // v78
+            new Vector2(0.75f, 0.625f),     // v79
+
+            // Turret Right
+            new Vector2(0.75f, 0.5f),       // v80
+            new Vector2(0.875f, 0.5f),      // v81
+            new Vector2(0.75f, 0.625f),     // v82
+            new Vector2(0.875f, 0.625f),    // v83
+
+            // Turret Up
+            new Vector2(0.875f, 0.5f),      // v84
+            new Vector2(1.0f, 0.5f),        // v85
+            new Vector2(0.875f, 0.625f),    // v86
+            new Vector2(1.0f, 0.625f)       // v87
         };
 
         SetUVs();
@@ -354,6 +382,38 @@ public class BoxUVs : MonoBehaviour
                 textureRef[1] = tPoints[69];
                 textureRef[2] = tPoints[70];
                 textureRef[3] = tPoints[71];
+
+                return textureRef;
+
+            case Side.TURD:
+                textureRef[0] = tPoints[72];
+                textureRef[1] = tPoints[73];
+                textureRef[2] = tPoints[74];
+                textureRef[3] = tPoints[75];
+
+                return textureRef;
+
+            case Side.TURL:
+                textureRef[0] = tPoints[76];
+                textureRef[1] = tPoints[77];
+                textureRef[2] = tPoints[78];
+                textureRef[3] = tPoints[79];
+
+                return textureRef;
+
+            case Side.TURR:
+                textureRef[0] = tPoints[80];
+                textureRef[1] = tPoints[81];
+                textureRef[2] = tPoints[82];
+                textureRef[3] = tPoints[83];
+
+                return textureRef;
+
+            case Side.TURU:
+                textureRef[0] = tPoints[84];
+                textureRef[1] = tPoints[85];
+                textureRef[2] = tPoints[86];
+                textureRef[3] = tPoints[87];
 
                 return textureRef;
         }
