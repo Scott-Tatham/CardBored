@@ -11,6 +11,6 @@ public class EnvironmentModifiers : MonoBehaviour
 
     void Awake()
     {
-        SetGravity(-25.0f);
+        SetGravity(-15.0f);
     }
 }
